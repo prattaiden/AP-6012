@@ -97,10 +97,8 @@ public class GrayscaleImage {
         if(x < 0 || x >= imageData[0].length || y < 0 || y>= imageData.length){
             throw new IllegalArgumentException("x and y are not within the same width/height");
         }
-        //declaring a variable pixel.
-        double pixel = imageData[y][x];
 
-        return pixel;
+        return imageData[y][x];
     }
 
     /**
@@ -113,13 +111,10 @@ public class GrayscaleImage {
     @Override
     public boolean equals(Object other) {
 
-        if(other == this){
-            return true;
-        }
-
         if(other == null){
             return false;
         }
+
         //AIDEN: checking if the object passed into the equals method is of the same object as GrayscaleImage
         //if not, return false
         if (!(other instanceof GrayscaleImage)) {
@@ -129,6 +124,10 @@ public class GrayscaleImage {
         //casting the other image to be a type of GrayscaleImage object
         GrayscaleImage otherImage = (GrayscaleImage) other;
 
+        if(this.imageData.length != otherImage.imageData.length || this.imageData[0].length != otherImage.imageData[0].length){
+            return false;
+        }
+
         //implement equals to return true only when all pixels are exactly equal
 
         //outerloop iterating through the rows of the imageData array
@@ -137,7 +136,7 @@ public class GrayscaleImage {
             //ensures that inner loop only iterates through the column of the current row
             for (var col = 0; col < imageData[row].length; col++) {
                 //if this pixels and other image pixels are not the same, return false
-                if (this.getPixel(row, col) != otherImage.getPixel(row, col)) {
+                if (this.getPixel(col, row) != otherImage.getPixel(col, row)) {
                     return false;
                 }
             }
@@ -160,7 +159,7 @@ public class GrayscaleImage {
         //outerloop for the rows of imageData, innerloop through each column of each row
         for (var row = 0; row < this.imageData.length; row++) {
             for (var col = 0; col < this.imageData[row].length; col++) {
-                double pixel = this.getPixel(row, col); //recieve brightness value at current row
+                double pixel = this.getPixel(col, row); //recieve brightness value at current row
                 totalBrightness += pixel; //add to totalbrightness
                 pixelCount++; //count pixels
             }
@@ -186,7 +185,7 @@ public class GrayscaleImage {
 
         double bright = this.averageBrightness();
         if(bright == 0){
-            bright = 1;
+            //bright = 1;
             throw new IllegalArgumentException("image is black");
         }
 
@@ -196,12 +195,12 @@ public class GrayscaleImage {
         GrayscaleImage newImage = new GrayscaleImage(pic);
 
         for (var row = 0; row < this.imageData.length; row++) {
-            for (var col = 0; col < this.imageData[row].length; col++) {
+            for (var col = 0; col < this.imageData[0].length; col++) {
                 //getting brightness of each pixel in the image
-                double pixel = this.getPixel(row, col);
+                double pixel = this.getPixel(col, row);
                 //scaling the pixel brightness by multiplying by the scale factor
                 double normValue = pixel * scale;
-                newImage.imageData[col][row] = normValue;
+                newImage.imageData[row][col] = normValue;
             }
         }
         return newImage;
@@ -247,7 +246,7 @@ public class GrayscaleImage {
      * @return A new GrayscaleImage containing the sub-image in the specified rectangle
      * @throws IllegalArgumentException if the specified rectangle goes outside the bounds of the original image
      */
-    public GrayscaleImage cropped(int startRow, int startCol, int width, int height) throws IllegalArgumentException {
+    public GrayscaleImage cropped(int startRow, int startCol, int width, int height) {
 
         //startRow - row index where cropping begins
         //startCol - column index where cropping begins
@@ -255,17 +254,9 @@ public class GrayscaleImage {
         //height - height of cropped region
 
         //if statements to ensure entered parameters are not outside the image ot be cropped
-        if (startRow < 0) {
-            startRow = 0;
-        }
-        if (startCol < 0) {
-            startCol = 0;
-        }
-        if (startRow + height > this.imageData.length) {
-            height = this.imageData.length - startRow;
-        }
-        if (startCol + width > this.imageData[0].length) {
-            width = this.imageData[0].length - startCol;
+        if (startRow < 0 || startCol < 0 || startRow + height > this.imageData.length || height < 0 || width < 0
+                || startCol + width > this.imageData[0].length) {
+            throw new IllegalArgumentException("out of bounds");
         }
 
         double[][] cropData = new double[height][width];

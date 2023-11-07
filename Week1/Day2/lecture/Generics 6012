@@ -1,0 +1,117 @@
+6012 11/7 Generics
+
+Base X = new Derived(); X.baseMethod();
+
+type of variable is base
+type of object is Derived
+you get a Derived item when calling baseMethod
+
+Base X = new Derived(); x.derivedMethod();
+can only call a base method
+can cast it as derived before
+
+left methods that can be run
+right is on heap and where the method can be run
+
+oop
+code can work with anyclass with the right interface or inheritance relationships
+individual classes must opt in by inheriting or implementing something
+
+var is like auto
+
+GA ga = new GA()
+ga.add(newStudent(4.0))
+var/Object s = ga.get(o);
+print(s.gpa)
+//problem is object does not have a gpa member field so it will not compile
+
+Java Generics <>
+
+public class GrowableArray<T>{
+}
+
+generic paramater is type
+the T is a placeholder for some type to be determined
+
+in cpp whenever make a template class, outputs whole new class with whatever T was with that class
+
+casts object to the T in Java
+can never call constructor of generic type, cant do new T
+cant create arrays of type T
+create object array cast it to a T array:
+private T[] arr = (T[])(new Object[10]);
+
+
+public class Generic Stuff{
+public static <T> void reverse (T[] arr){
+
+
+}
+
+
+
+
+main(){
+var ints = new Integer{}{1,2,3,4}; Integer because T can only do object types not primative
+reverse(ints);
+
+var points = new Point[]{new Point(1,2)}
+reverse(points);
+//static method so dont need object or class in front
+//because in generic classes
+//
+}
+
+
+problem with overwriting .equals
+
+have to check if same type and then cast
+overloading same method name different types
+overloading looks at variable type for which type to call
+if overloading .equals, looks at type of variable it is stored in and call different version of the methods
+have to use version from object and have to do the casting
+
+common interface to use in this classes
+public interface Comparable <T>{
+int compareTo(T o);
+}
+0 if it is equal
+
+
+public class Person implements Comparable<Person>{
+String first, last;
+}
+
+public Person(String first, String last){
+
+}
+
+@Override
+public int CompareTo(Person o){
+//Comparable<String> test = first;
+return first.compareTo(o.first);
+}
+
+main(){
+var people = new ArrayList<Person>();
+people.add(new Person("aiden","pratt"));
+
+Collections.sort(people);
+//simplified
+//public static <T extends Comparable<? super T>>
+constraint on type T, uses extends key word even though Comparable interface
+sorting works for any type of thing as long as it can be compared to itself
+specific T must match interface
+//void sort(List<T> list)
+}
+
+
+Comparator
+interface that is similar but has a compare method not compare to
+
+
+shortest lambda function expression
+Collections.sort(names, (n1,n2) -> n1.getFirst().compareTo(n2.getFirst()) );
+use when lambda is just return one thing
+
+arraylist of derived class is not related in any way to arraylsit of a base class

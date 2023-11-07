@@ -1,0 +1,30 @@
+1. On your computer, how many times per second does the millisecond timer update?
+About 1000 times.
+Sometimes it is slightly over 1000, 1002 or 1004.
+
+2. Is it possible to determine how many times per second the nanosecond timer updates? If so, how many? If not, why not?
+It is possible to get a reading but it is not reliable because of how small the scale is for nano seconds
+The time just call the sout is too long in nano seconds.
+
+
+3. Judging by experiment 4, how long does it appear to take to compute System.nanoTime()?
+About 42 nano seconds on average
+
+
+4. Estimate the precision of your answer above (+/- how many nanoseconds?)
+41 + or - 2 with the occasional 80 so + or - 20
+
+5. How long does it take to compute the square root of the numbers 1 through 10?
+It takes exactly 7541 nanoseconds to compute the square roots of the  numbers 1..10. in timing experiment07
+
+It takes exactly 52.0 nanoseconds to compute the square roots of the  numbers 1..10. in timing experiment08
+
+6. Estimate the precision of your answer above (+/- how many nanoseconds?)
++ or - 1200 nanoseconds based on running the code multiple times in 07
++ or - 10 nanoseconds based on running code 08 multiple times because it gets a more accurate average after 1 million tests
+
+7. If you repeat the square root test 100x as many times, does the precision improve?
+Yes it does 
+
+8. How could you improve the results (get a more accurate estimate of elapsed time)?
+Run the loop several times and get the average

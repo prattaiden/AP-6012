@@ -125,6 +125,7 @@ class GrayscaleImageTest {
         });
     }
 
+
     //equals-------------------------------
     @Test
     void testEqualsTrue() {
@@ -146,6 +147,9 @@ class GrayscaleImageTest {
         assertTrue(smallSquare.equals(smallSquare2));
         assertTrue(smallSquare2.equals(smallSquare));
     }
+
+
+
 
     //brightness----------------------------
     @Test
@@ -178,13 +182,18 @@ class GrayscaleImageTest {
         assertEquals(singleVal.mirrored(), expected);
     }
 
+    //test on nonsquare image
+
     //cropped-------------------------------
     @Test
     void croppedOutOfBounds() {
-        var cropped = smallSquare.cropped(1, 1, 3, 3);
-        assertEquals(cropped, new GrayscaleImage(new double[][]{{4}}));
+//        var cropped = smallSquare.cropped(1, 1, 3, 3);
+        assertThrows(IllegalArgumentException.class, () -> {
+            smallSquare.cropped(1, 1, 3, 3);
+        });
     }
 }
+
 
 //tests I could not get to work.. ---------------
 //    @Test
