@@ -1,0 +1,43 @@
+cs 6012 Data Structures and Algorithms
+11/6
+
+array list data structure
+
+different kinds of inputs and ways that they are sorted will cause different sorting Algorithms to sort better or worse
+run time of operation as function of end point size
+
+psuedo code for Algorithm
+
+sort1(int[]arr){
+  for ( i = 1; arr.length){
+    j = i;
+      while (j>0 && arr[j-1]> arr[j]){
+        swap arr[j], arr[j-1];
+          j--;
+      }
+  }
+}
+
+lab and homework
+
+testing
+ruling out possible bugs
+unit testing : testing individual "components" in isolation
+
+methods or class
+write tests just for one piece of an Algorithm not the while sort code
+pick inputs we know the output for, run code on the input, assert (the output is correct)
+small inputs and outputs than can be manually checked
+check properties of the output
+check adjacent elements are always in order
+
+big structured inputs [o]*10000000
+
+test to include edge cases
+-negatives and positives
+arrays of length 1 or 2
+look at code think about scary parts
+- loop conditions > vs >=
+
+start with a small "normal example"
+add edge cases after that
