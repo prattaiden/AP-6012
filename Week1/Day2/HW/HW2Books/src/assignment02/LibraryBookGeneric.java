@@ -1,19 +1,19 @@
 package assignment02;
 import java.util.GregorianCalendar;
-public class LibraryBook extends Book{
+public class LibraryBookGeneric<T> extends Book{
 
-    String holder_ = null;
+    T holder_ = null;
 
     GregorianCalendar dueDate_ = null;
 
     int  month_ , day_,  year_;
 
     //constructor
-    public LibraryBook(long isbn, String author, String title) {
+    public LibraryBookGeneric(long isbn, String author, String title) {
         super(isbn, author, title);
     }
 
-    public String getHolder() {
+    public T getHolder() {
         return holder_;
     }
 
@@ -21,7 +21,7 @@ public class LibraryBook extends Book{
         return dueDate_;
     }
 
-    public void setHolder(String holder){
+    public void setHolder(T holder){
        this.holder_ = holder;
     }
 
@@ -41,11 +41,11 @@ public class LibraryBook extends Book{
     }
 
     //methods for checking the book in and out
-    public void checkBookOut(){
-
-    }
-
-    public void checkBookIn(){
-
-    }
+//    public void checkBookOut(){
+//
+//    }
+//
+//    public void checkBookIn(){
+//
+//    }
 }

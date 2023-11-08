@@ -9,6 +9,8 @@ The time just call the sout is too long in nano seconds.
 
 3. Judging by experiment 4, how long does it appear to take to compute System.nanoTime()?
 About 42 nano seconds on average
+This changes often after multiple runs
+The time taken to computer the system.nanoTime is variable and can depend on many factors
 
 
 4. Estimate the precision of your answer above (+/- how many nanoseconds?)

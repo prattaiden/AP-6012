@@ -11,13 +11,13 @@ import java.util.Scanner;
  * Class representation of a library (a collection of library books).
  * 
  */
-public class Library {
+public class LibraryGeneric<T> {
 
 //  private LibraryBook libraryBook = new LibraryBook();
-  private ArrayList<LibraryBook> library;
+  private ArrayList<LibraryBookGeneric<T>> library;
 
-  public Library() {
-    library = new ArrayList<LibraryBook>();
+  public LibraryGeneric() {
+    library = new ArrayList<LibraryBookGeneric<T>>();
   }
 
   /**
@@ -31,7 +31,7 @@ public class Library {
    *          -- title of the book to be added
    */
   public void add(long isbn, String author, String title) {
-    library.add(new LibraryBook(isbn, author, title));
+    library.add(new LibraryBookGeneric(isbn, author, title));
   }
 
   /**
@@ -40,7 +40,7 @@ public class Library {
    * @param list
    *          -- list of library books to be added
    */
-  public void addAll(ArrayList<LibraryBook> list) {
+  public void addAll(ArrayList<LibraryBookGeneric<T>> list) {
     library.addAll(list);
   }
 
@@ -53,7 +53,7 @@ public class Library {
    * @param filename
    */
   public void addAll(String filename) {
-    ArrayList<LibraryBook> toBeAdded = new ArrayList<LibraryBook>();
+    ArrayList<LibraryBookGeneric<T>> toBeAdded = new ArrayList<LibraryBookGeneric<T>>();
 
     try (Scanner fileIn = new Scanner(new File(filename))) {
 
@@ -79,7 +79,7 @@ public class Library {
             throw new ParseException("Title", lineNum);
           }
           String title = lineIn.next();
-          toBeAdded.add(new LibraryBook(isbn, author, title));
+          toBeAdded.add(new LibraryBookGeneric(isbn, author, title));
         }
         lineNum++;
       }
@@ -103,12 +103,12 @@ public class Library {
    * @param isbn
    *          -- ISBN of the book to be looked up
    */
-  public String lookup(long isbn) {
+  public <T> T lookup(long isbn) {
     //looping through each book in the library array
-    for(LibraryBook book : library ){
+    for(LibraryBookGeneric book : library ){
       //if the entered isbn is a book in the library return the holder of that book
       if(isbn == book.getIsbn()) {
-        return book.getHolder();
+        return (T) book.getHolder();
       }
     }
     return null;
@@ -122,11 +122,11 @@ public class Library {
    * @param holder
    *          -- holder whose checked out books are returned
    */
-  public ArrayList<LibraryBook> lookup(String holder) {
+  public ArrayList<LibraryBookGeneric> lookup(T holder) {
     //creating array of libary books called holder books that will be added to
-    ArrayList<LibraryBook> holderBooks = new ArrayList<>();
+    ArrayList<LibraryBookGeneric> holderBooks = new ArrayList<>();
     //looping through the library array and checking if entered holder is in possession of any library books
-    for(LibraryBook book : library){
+    for(LibraryBookGeneric book : library){
       if(book.getHolder() != null && book.getHolder() == holder){
         holderBooks.add(book);
       }
@@ -156,9 +156,9 @@ public class Library {
    *          -- year of the new due date of the library book
    * 
    */
-  public boolean checkout(long isbn, String holder, int month, int day, int year) {
+  public boolean checkout(long isbn, T holder, int month, int day, int year) {
 
-    for(LibraryBook book : library){
+    for(LibraryBookGeneric book : library){
 
       //if the book is in the library
       if (isbn == book.getIsbn()){
@@ -193,7 +193,7 @@ public class Library {
    *          -- ISBN of the library book to be checked in
    */
   public boolean checkin(long isbn) {
-    for(LibraryBook book : library){
+    for(LibraryBookGeneric book : library){
       if(book.getHolder() != null && isbn == book.getIsbn()){
         //if there is a holder for the book and the isbn is in the library
           book.holder_ = null;
@@ -217,8 +217,8 @@ public class Library {
    * @param holder
    *          -- holder of the library books to be checked in
    */
-  public boolean checkin(String holder) {
-    for(LibraryBook book : library){
+  public boolean checkin(T holder) {
+    for(LibraryBookGeneric book : library){
       if(book.getHolder() != null && book.getHolder() == holder){
         book.holder_ = null;
         book.dueDate_ = null;
