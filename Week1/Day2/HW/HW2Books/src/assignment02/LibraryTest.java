@@ -2,6 +2,7 @@ package assignment02;
 
 import org.junit.jupiter.api.Test;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
@@ -128,6 +129,7 @@ class LibraryTest {
         var checkout2 = lib.checkout(9780330351690L, "Aiden Pratt", 1, 1, 2009);
         //asserting false because checking out this book is unavailable
         assertFalse(checkout2);
+
     }
 
     //looking up a non valid ISBN number
@@ -146,12 +148,76 @@ class LibraryTest {
     }
 
     @Test
-    public void test(){}
+    public void testGetOverDueDate(){
+        var lib = new LibraryGeneric();
+        //adding book to the library
+        lib.add(9780330351690L, "Jon Krakauer", "Into the Wild");
+        lib.add(9780374292799L, "Thomas L. Friedman", "The World is Flat");
+        lib.add(9780446580342L, "David Baldacci", "Simple Genius");
+        lib.add(8000, "David Baldacci", "This Book");
+
+        //first person checking out the book
+        var checkout1 = lib.checkout(9780330351690L, "Jane Doe", 1, 1, 2008);
+        assertTrue(checkout1);
+        var checkout2 = lib.checkout(9780374292799L, "Aiden Pratt", 1, 1, 2008);
+        assertTrue(checkout2);
+        var checkout3 = lib.checkout(9780446580342L, "Melanie Prettyman", 10, 6, 2009);
+        //this is not due yet by one day
+        assertTrue(checkout3);
+        var checkout4 = lib.checkout(8000, "Dude", 10, 5, 2009);
+        //this is not due yet?
+        assertTrue(checkout4);
+
+        ArrayList<LibraryBookGeneric> books = lib.getOverdueList(10, 5, 2009);
+        //asserting that two books are overdue
+        assertEquals(books.size(), 2);
+
+//        //testing if due date is same
+//        var checkout4 = lib.checkout(8000, "Aiden Pratt", 1, 1, 2008);
+//        ArrayList<LibraryBookGeneric> books2 = lib.getOverdueList(1, 1, 2008);
+//        assertEquals(books2.size(),2);
+    }
 
     @Test
-    public void testAddAllArrayList(){
-        ArrayList<LibraryBookGeneric> list = new ArrayList<>();
+    public void testGetInventoryList(){
+        var lib = new LibraryGeneric();
+        //adding book to the library
+        lib.add(00000001, "Jon Krakauer", "Into the Wild");
+        lib.add(00000002, "Thomas L. Friedman", "The World is Flat");
+        lib.add(00000003, "David Baldacci", "Simple Genius");
+
+        ArrayList<LibraryBookGeneric> sortByISBN = lib.getInventoryList();
+        assertEquals(sortByISBN.get(2).getIsbn(), 00000003);
     }
+
+    @Test
+    public void testGetByAuthor(){
+        var lib = new LibraryGeneric();
+        //adding book to the library
+        lib.add(00000001, "Jon Krakauer", "Into the Wild");
+        lib.add(00000002, "Thomas L. Friedman", "The World is Flat");
+        lib.add(00000003, "David Baldacci", "Simple Genius");
+        ArrayList<LibraryBookGeneric> sortByAuthor = lib.getOrderedByAuthor();
+        //found the author name
+        assertEquals(sortByAuthor.get(0).getAuthor(), "David Baldacci");
+
+        lib.add(00000003, "David Baldacci", "A");
+        ArrayList<LibraryBookGeneric> sortByAuthor2 = lib.getOrderedByAuthor();
+
+        assertEquals(sortByAuthor2.get(0).getTitle(), "A");
+
+        //adding the same book to the libraty for a new array list sorted by author
+        lib.add(0000003, "David Baldacci", "A");
+        ArrayList<LibraryBookGeneric> sortByAuthor3 = lib.getOrderedByAuthor();
+        //first to objects in the array list should have the same title,
+        //they are equal but sort into position 0 and 1
+
+        assertEquals(sortByAuthor3.get(0).getTitle(), "A");
+        assertEquals(sortByAuthor3.get(1).getTitle(), "A");
+        assertEquals(sortByAuthor3.get(2).getTitle(), "Simple Genius");
+    }
+
+
 
     //someone checks out
     //normal check in

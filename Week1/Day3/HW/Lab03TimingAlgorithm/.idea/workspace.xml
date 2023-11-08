@@ -5,20 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a0979943-1cdd-49bb-8300-526d98188b05" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Lab03TimingAlgorithm.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/contains_experiment.tsv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lab03-experiment.tsv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lab03/ContainsTimingExperiment.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lab03/HowToTime.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lab03/TimingEXP.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lab03/plot_timing.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Day2/HW/HW2Books/src/assignment02/Book.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Day2/HW/HW2Books/src/assignment02/Book.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Day2/HW/HW2Books/src/assignment02/LibraryBookGeneric.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Day2/HW/HW2Books/src/assignment02/LibraryBookGeneric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../../Day2/HW/HW2Books/src/assignment02/LibraryTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../../../Day2/HW/HW2Books/src/assignment02/LibraryTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -108,7 +95,7 @@
       <option name="presentableId" value="Default" />
       <updated>1699465891239</updated>
       <workItem from="1699465893308" duration="992000" />
-      <workItem from="1699466907013" duration="2686000" />
+      <workItem from="1699466907013" duration="2881000" />
     </task>
     <servers />
   </component>
