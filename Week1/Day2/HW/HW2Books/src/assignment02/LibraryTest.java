@@ -54,7 +54,7 @@ class LibraryTest {
         // test a medium library
         var lib = new LibraryGeneric();
         lib.addAll("Mushroom_Publishing.txt");
-        // FILL IN MORE TESTS HERE!
+
     }
     @Test
     public void stringLibraryTest() {
@@ -111,7 +111,7 @@ class LibraryTest {
 
     }
 
-    //AIDEN TESTS--------------------------------------
+    //AIDEN TESTS---------------------------------------------------------------
     //duplicate checkout Test
     @Test
     public void testDuplicateCheckOut(){
@@ -125,11 +125,33 @@ class LibraryTest {
         //asserting true because checking out is available
         assertTrue(checkout1);
         //second person checking out the book
-        var checkout2 = lib.checkout(9780330351690L, "Aiden Pratt", 1, 1, 2008);
+        var checkout2 = lib.checkout(9780330351690L, "Aiden Pratt", 1, 1, 2009);
         //asserting false because checking out this book is unavailable
         assertFalse(checkout2);
     }
 
+    //looking up a non valid ISBN number
+    @Test
+    public void testIncorrectIsbn(){
+        LibraryGeneric lib = new LibraryGeneric<>();
+        assertNull(lib.lookup(9780330351690L));
+    }
+
+    @Test
+    public void testInvalidHolder(){
+        LibraryGeneric lib = new LibraryGeneric<>();
+        ArrayList<LibraryBookGeneric> booksArray = new ArrayList<>();
+        var invalidHolder = lib.lookup("Jason Derulo");
+        assertEquals(booksArray.size(), 0);
+    }
+
+    @Test
+    public void test(){}
+
+    @Test
+    public void testAddAllArrayList(){
+        ArrayList<LibraryBookGeneric> list = new ArrayList<>();
+    }
 
     //someone checks out
     //normal check in

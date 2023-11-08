@@ -36,8 +36,6 @@ public class LibraryBookGeneric<T> extends Book{
 //        GregorianCalendar dueDate = new GregorianCalendar(year,month,day);
 //
 //        this.dueDate_=dueDate;
-
-
     }
 
     //methods for checking the book in and out

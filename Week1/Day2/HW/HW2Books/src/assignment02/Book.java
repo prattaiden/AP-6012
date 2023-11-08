@@ -50,11 +50,6 @@ public class Book {
    * @return true if "other" is a Book and is equal to "this", false otherwise
    */
   public boolean equals (Object other){
-    // FILL IN -- do not return false unless appropriate
-
-//    if (!(other instanceof Book)) {
-//      return false;
-//    }
 
     Book otherBook = (Book) other;
 
