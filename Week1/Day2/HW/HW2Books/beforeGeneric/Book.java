@@ -1,6 +1,5 @@
 package assignment02;
 
-
 /**
  * Class representation of a book. The ISBN, author, and title can never change
  * once the book is created.
@@ -51,19 +50,23 @@ public class Book {
    * @return true if "other" is a Book and is equal to "this", false otherwise
    */
   public boolean equals (Object other){
+    // FILL IN -- do not return false unless appropriate
 
-
-
-    if(other == null){
-      return false;
-    }
+//    if (!(other instanceof Book)) {
+//      return false;
+//    }
 
     Book otherBook = (Book) other;
 
-    return otherBook.author == this.author
+    if(otherBook.author == this.author
       && otherBook.isbn == this.isbn
-      && otherBook.title == this.title;
+      && otherBook.title == this.title){
+      return true;
+    }
 
+    else{
+      return false;
+    }
   }
 
   /**

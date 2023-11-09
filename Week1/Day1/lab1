@@ -4,6 +4,7 @@ Answer the following questions in a text file(NOT A WORD DOCUMENT!). Add your an
 
 1. Where is the assertEquals method defined? What does it do? Can we use assertEquals for more than just int types? (Hint: Consult the API for JUnit)
 assertEquals is a part of the JUnit being used to run tests in the program. 
+The assertEquals method asserts that two entered objects are equal and throws an error if not.
 
 2. Briefly describe what each of the three tests is checking.
 The first test is testing an empty array and asserting that the expected value is -1. This is because the findSmallestDiff method checks if the array list length is less than 2 and returns -1.
