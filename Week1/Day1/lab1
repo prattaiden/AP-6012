@@ -15,6 +15,7 @@ The third test is testing a random array of elements that has positive and negat
 It was passing because the original stub was set to return 0. The second test was expecting a 0.
 
 4. Why are we failing the third test? How should our method be modified to correct this?
+We were failing the third test because the array had negative and positive numbers, when comparing these numbers it was subtracting a positive number from a negative number and not getting a true value. The expected value was 4 so adding Math.abs() allowed for the absolute value of these numbers to be compared.
 I added Math.abs() around the int tmp_diff = Math.abs(a[i] - a[j]);
 This changed the values of the elements being compared to ensure there were no errors with the subrataction
 
