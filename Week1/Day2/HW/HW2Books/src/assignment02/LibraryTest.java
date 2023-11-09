@@ -111,7 +111,7 @@ class LibraryTest {
 
     }
 
-    //AIDEN TESTS---------------------------------------------------------------
+    //------------------------------------------AIDEN TESTS-----------------------------------------------
     //duplicate checkout Test
     @Test
     public void testDuplicateCheckOut(){

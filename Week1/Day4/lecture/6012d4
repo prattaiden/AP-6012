@@ -1,0 +1,112 @@
+Sorting Algorithms
+
+sorting algorithm
+
+compare adjacent elements , swap them if they're unordered
+
+bubble sort:
+repeat N times -
+  for i = 0 .. N
+    comapre elementes i and i + 1
+      swap if necessary
+
+big O to analyze performance
+repeat N times and for loop are N teams
+compare and swap two elements take roughly same time O(1)
+so multiply and get:
+O(N^2)
+
+add while not done - done = true
+done = false until it is sorted
+
+best: outer loop, go through inner loop once. already sorted
+
+selection sort:
+repeat n times
+find minimum of the "back" of the array, then swap it into place
+oilers formula...
+does same operation and instructions no matter what input looks like
+
+
+"Invariants" , properties that are true at each step of the algorithm
+selection sort , invariant is that after step i , the first i element of the sorted array are in place
+
+Invariants
+after duration i
+elemeont 0 - i are sorted with eachother
+
+Insertion sort
+for i = 0 .. N --- run N times
+  j=i
+    while j / j-1 are unordered --- best: O(1) - array is in order, worst: O(i) .. have to shift all the way down, worst case oilers O(N^2)
+      swap them --- run O(1) times
+        j--
+
+
+performance of a sorting algorithm
+is an Ω of the number of swaps
+big Ω is opposite of Big O  ,, it is basically greater than or equal to >=
+
+selection sort is always N swaps . run time is O(N^2) bc not just swapping, searching for what to swaps
+
+can never do better than O(N)
+
+how to quantify how sorted or unsorted an array is
+"inversion" - pair of elements anywhere in an array that are out of order, not necessarily adjacent
+
+measure of "unsortedness" is total number of inversions
+
+min number of inversions is 0 if it is unsorted
+max number of inversions
+element 0 is in N-1 inversions
+element 1 is in N-2 other inversions
+N^2/2 inversions
+O(N^2) over all
+average case of inversions
+Element 0: (n-1)/2
+element 1: (n-2)/2
+average is N^2/4 - O(N^2)
+
+when I swap adjacent elements, how many inversions can i fix?
+just 1 ,
+
+any sort that swaps adjacent elements is Ω (#of inversions)
+
+Insertion sort is O(i + N) always
+best, worst, average, just changes what i is
+N speed limit, still have to check it is sorted even if i is 0
+
+If swapping long distances with selection sort, can fix up to 2N inversions in a single swap
+
+shell sort
+for gapSize = n/2, n/4, n/8, n/16 // gap sequence repeatedly half stuff logN times to get down to 1
+  for i = gapSize .. N, i++                                 Ω(N)
+    for j = i; j>gapSize && arr[j]<arr[j-gapSize]; i++
+        swap arr[j], arr[j-gapSize]
+
+of at least Ω(NlgN) - prob higher
+worst case is actually O(N^2)
+average case is O(N^3/2) - N√N
+run plain insertion sort on all the
+
+-----------------------------Assignment 3---------------------------------
+
+customer with collection of data want to perform
+is some value in the data - loop through list
+add something to collection of data - add to end
+remove something from data - find it if in there, take it out
+
+contains method, choose to organize array in way to make it fast - sort it
+sorted array binary search, contains is then O(lgN)
+
+Abstract data type
+  set ADT - add , remove, contains they return booleans and return true or false if it did anything
+  sets is like a generic , a set of books or persons or integers etc
+
+Data structure
+  like a class implementing the ADT
+  sortedListSet implementing , keep a sorted array
+
+write a class that implements an interface
+
+ignore iterators for now

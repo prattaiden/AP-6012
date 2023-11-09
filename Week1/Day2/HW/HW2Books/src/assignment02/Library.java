@@ -96,6 +96,7 @@ public class Library<T> {
     library.addAll(toBeAdded);
   }
 
+  //----------------------------------AIDEN-------------------------------------------------
   /**
    * Returns the holder of the library book with the specified ISBN.
    * 
@@ -104,12 +105,12 @@ public class Library<T> {
    * @param isbn
    *          -- ISBN of the book to be looked up
    */
-  public <T> T lookup(long isbn) {
+  public T lookup(long isbn) {
     //looping through each book in the library array
-    for(LibraryBook book : library ){
+    for(LibraryBook<T> book : library ){
       //if the entered isbn is a book in the library return the holder of that book
       if(isbn == book.getIsbn()) {
-        return (T) book.getHolder();
+        return book.getHolder();
       }
     }
     return null;
@@ -132,7 +133,7 @@ public class Library<T> {
         holderBooks.add(book);
       }
     }
-    //will be empty if holder does not have any libray books
+    //will be empty if holder does not have any library books
     return holderBooks;
   }
 
@@ -159,16 +160,21 @@ public class Library<T> {
    */
   public boolean checkout(long isbn, T holder, int month, int day, int year) {
 
+    //loop through books in library
     for(LibraryBook book : library){
 
-      //if the book is in the library
+      //if the book is in the library, set isbn
       if (isbn == book.getIsbn()){
 
-        //if there is no holder for the book return true, can be checked out
+        //if there the holder is not eqaul to null, return false, cannot be checked out bc there is a holder
        if(book.getHolder() != null){
          return false;
        }
 
+       //else there is no holder, and it can be checked out
+       //setting the holder to the book
+       //setting the due date entered
+       //returning true because there is a holder now, and it cannot be checked out
        else {
          book.setHolder(holder);
          book.setDueDate(new GregorianCalendar(year,month,day));
@@ -177,6 +183,7 @@ public class Library<T> {
 
       }
     }
+
     //if the book is not in the library
     return false;
   }
@@ -219,6 +226,7 @@ public class Library<T> {
    *          -- holder of the library books to be checked in
    */
   public boolean checkin(T holder) {
+    //same thing but when the user enters a holder T instead of a isbn
     for(LibraryBook book : library){
       if(book.getHolder() != null && book.getHolder() == holder){
         book.holder_ = null;
@@ -243,15 +251,18 @@ public class Library<T> {
     return libraryCopy;
   }
 
-  //write method gor get ordered by author and overdue list
-  //write compare to methods
   /**
    * Returns the list of library books, sorted by author
    */
+  //-----------------------------------------AIDEN-------------------------------------------------------
   public ArrayList<LibraryBook<T>> getOrderedByAuthor() {
+    //creating an array list of lib books
     ArrayList<LibraryBook<T>> libraryCopyByAuthor = new ArrayList<LibraryBook<T>>();
+    //adding books of the library to the array list
     libraryCopyByAuthor.addAll(library);
+    //calling the comparator from class OrderByAuthor
     OrderByAuthor comparator = new OrderByAuthor();
+    //calling the sort method to sort them by author based on comparator's rules
     sort(libraryCopyByAuthor, comparator);
     return libraryCopyByAuthor;
   }
@@ -264,19 +275,24 @@ public class Library<T> {
    * If no library books are overdue, returns an empty list.
    */
   public ArrayList<LibraryBook<T>> getOverdueList(int month, int day, int year) {
+    //array list of calendar
     GregorianCalendar inputtedDate = new GregorianCalendar(year, month, day);
     ArrayList<LibraryBook<T>> libraryOverdueList = new ArrayList<LibraryBook<T>>();
     OrderByDueDate comparator = new OrderByDueDate();
+    //loop through the books in the library
     for(LibraryBook book : library){
 
       //if the book due date is not null
       if(book.getDueDate()!= null){
+        //if ther eis a due date, compare it to the due date inputted in the parameters
         int res = book.getDueDate().compareTo(inputtedDate);
+        //if res < 0, the due date for book.getduedate is overdue, so it is added to array list
         if (res < 0) {
           libraryOverdueList.add(book);
         }
       }
     }
+    //sorting these bookes by the earliest due date first
     sort(libraryOverdueList , comparator);
     System.out.println(libraryOverdueList);
     return libraryOverdueList;
@@ -352,8 +368,6 @@ public class Library<T> {
 
       return date;
 
-      //tests if the list only has one due date
-      //test if the list is on the same day
     }
 
   }

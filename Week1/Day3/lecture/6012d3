@@ -1,5 +1,21 @@
 Complexity Analysis: Big O Notation
 
+BROCODE GENERICS NOTES:
+<Thing>
+
+generic classes
+
+
+BIG O Notation youtube notes:::
+time it takes to run your function grows as the size of the input grows
+
+time complexity : linear time, constant time, quadratic time
+
+linear time O(n) - n is size of input, num of elements in given array
+T=an+b
+constant tinm O(1) -
+
+
 Generics continued
 object in inner class has reference to outer classes
 static class Student{}
