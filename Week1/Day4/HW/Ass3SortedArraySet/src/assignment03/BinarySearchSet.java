@@ -2,16 +2,12 @@ package assignment03;
 
 import java.util.*;
 
-public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable {
+public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E> {
 
     private E[] set_;
     private int capacity_ = 0;
     private int size_ = 0;
-    //private boolean isSorted = false;
     private Comparator<? super E> comparator_;
-
-
-
 
     //Constructor 1
     //If this constructor is used to create the sorted set,
@@ -21,10 +17,7 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable {
         capacity_ = 10;
         set_ = (E[]) new Object[capacity_];
         size_ = 0;
-
-
     }
-
     //Constructor 2
     //If this constructor is used to create the sorted set,
     // it is assumed that the elements are ordered using the provided comparator.
@@ -33,9 +26,8 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable {
         capacity_ = 10;
         set_ = (E[]) new Object[capacity_];
         size_ = 0;
-
     }
-    //------------------------------overriding methods----------------------------------
+    //----------------------------overriding methods in SortedSet----------------------------------
     @Override
     public Comparator<? super E> comparator() {
         return comparator_;
@@ -59,39 +51,57 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable {
 
     @Override
     public boolean add(E element) {
+        //handling case when set is initially null when addis called on it
+        //initializes a new array of object
+        //E is being cast on it
         if (set_ == null) {
             set_ = (E[]) new Object[]{element};
             size_ = 1;
             return true;
         }
-        if (!contains(element)) {
+        //if the element entered as a parameter is not in this
+        //means it should be added, then check if the array needs to be grown
+        if (!this.contains(element)) {
             if (size_ >= capacity_) {
                 growArray();
             }
             // Call binarySearch to find the insertion point
             int insertionPoint = binarySearch(element);
-            // if insertion point is negative, negates it and subracts one
 
+            //if the insertion point is negative
+            //negates it and subtracts one, obtaining where it should be placed
             if (insertionPoint < 0) {
                 insertionPoint = -(insertionPoint + 1);
             }
-            // Shift the elements to the right, starting from the insertion point, to make space for the new element.
-            System.arraycopy(set_, insertionPoint, set_, insertionPoint + 1, size_ - insertionPoint);
+            // Shift the elements to the right, starting from the insertion point,
+            // to make space for the new element.
+            System.arraycopy(set_, insertionPoint, set_,
+                    insertionPoint + 1, size_ - insertionPoint);
             // Assign the new element to the insertion point and increment the size of the set.
             set_[insertionPoint] = element;
             size_++;
             return true;
 
         }
+        //if element is already in the array retirn false
         return false;
     }
 
     @Override
-    public boolean addAll(Collection elements) {
-        for(Object obj: elements){
-            this.add((E) obj);
+    public boolean addAll(Collection<? extends E> elements) {
+        int og = this.size();
+        //looping through the elements to be added
+        //if this does not contain it , add it
+        for(E obj: elements){
+            if(!this.contains(obj)){
+                this.add(obj);
+            }
         }
-        return this.containsAll(elements);
+        int newA = this.size();
+        //after the for loop, if the new array is greater
+        //return true, meaning that it grew
+        return newA > og;
+
     }
 
     @Override
@@ -114,8 +124,9 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable {
 
     @Override
     public boolean containsAll(Collection <? extends E> elements) {
-        for(Object obj: elements){
-            if(!this.contains((E) obj)){
+
+        for(E obj: elements){
+            if(!this.contains(obj)){
                 return false;
             }
         }
@@ -124,12 +135,7 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable {
 
     @Override
     public boolean isEmpty() {
-        return size_ == 0;
-    }
-
-    @Override
-    public Iterator iterator() {
-        return null;
+        return (size_ == 0);
     }
 
     @Override
@@ -142,14 +148,16 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable {
             set_[--size_] = null;  // Clear the last element
             return true;
         }
-
         // Element not found
         return false;
     }
 
     @Override
     public boolean removeAll(Collection elements) {
-        return false;
+        for(Object obj : elements){
+            this.remove((E)obj);
+        }
+        return true;
     }
 
     @Override
@@ -159,8 +167,42 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable {
 
     @Override
     public E[] toArray() {
-        return (E[]) new Object[0];
+        E[] array = Arrays.copyOf(set_, this.size());
+        return array;
     }
+
+    //---------------------------------Iterator Class--------------------------------------------\\
+    @Override
+    public Iterator iterator() {
+        return new myIterator();
+    }
+
+    class myIterator implements Iterator<E>{
+        private int position_ = 0;
+        @Override
+        public boolean hasNext() {
+            //if the position is less than the size of the array
+            return size_ > 0 && position_ < size_;
+        }
+        @Override
+        public E next() {
+            //if there is a next value in the array
+            //return the position in the set incremented by 1
+            if (hasNext()) {
+                return set_[position_++];
+            }
+            else {
+                throw new NoSuchElementException("invalid, no next");
+            }
+        }
+
+        public void remove(){
+            //??
+            Iterator.super.remove();
+
+        }
+    }
+
 
     //----------------------------additional helper methods----------------------------\\
     //grow the array
@@ -177,31 +219,41 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable {
 
     //binary search from tree set
     private int binarySearch(E element) {
-        int low = 0;
-        int high = size_ - 1;
+        //initializing starting points for the binary search
+        //low is the start while high is the end
+        int startPoint = 0;
+        int endPoint = size_ - 1;
+        int comparison;
+        //calculating the midpoint
 
-        while (low <= high) {
-            int mid = (low + high) >>> 1;
-            @SuppressWarnings("unchecked")
-            Comparable<? super E> midVal = (Comparable<? super E>) set_[mid];
+        //loops through and continues until range is exhausted
+        while (startPoint <= endPoint) {
+            // >>> right shifting to ensure non-negative midpoint
+            int mid = (startPoint + endPoint) >>> 1; //same as /2
+            if (comparator_ != null ){
+                comparison = comparator_.compare(set_[mid], element);
+            }
+            else {
+                //natural order
+                Comparable<? super E> midVal = (Comparable<? super E>) set_[mid];
 
-            if (midVal == null) {
-                // Skip comparison if element is null
-                low = mid + 1;
-                continue;
+                if (midVal == null) {
+                    throw new NoSuchElementException("not comparable");
+                }
+                //comparing the midval to the element
+                //saving
+                comparison = midVal.compareTo(element);
             }
 
-            int cmp = midVal.compareTo(element);
-
-            if (cmp < 0) {
-                low = mid + 1;
-            } else if (cmp > 0) {
-                high = mid - 1;
+            if (comparison < 0) {
+                startPoint = mid + 1;
+            } else if (comparison > 0) {
+                endPoint = mid - 1;
             } else {
                 return mid; // Element found
             }
         }
-        return -(low + 1); // Element not found, return the insertion point
+        return -(startPoint + 1); // Element not found, return the insertion point
     }
 
 }

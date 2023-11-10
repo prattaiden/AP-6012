@@ -1,0 +1,138 @@
+Collections and iterators
+
+collection anything with stuff in it
+
+binary search in assignment 3
+what do we want to return
+index of thing in the array
+where it should go in the add method
+
+add:
+returns index where val should be in the array
+contains:
+check the index from binary search and see if the contains parameter is there
+
+closed or half open
+[b,e] = b, b+1, --- e
+[b,e) = b, b+1 .... e  - 1 -- e-b = # of elements
+
+helper method to take two objects and compare them
+checks if to use compare to or comparator
+check if member variable comparator is null
+provide helper method that orivudes right compartor, if the entered member variable is null or not
+make comparator which uses compare to - natural order method, comarator that uses method
+
+List adt
+list stores element in some unordered, specified by the user
+T get(i)
+void set (index, T)[]
+
+void add(index, T)
+void remove(index)
+
+Big O complexity O(N) to loop through and copy over
+add N elements to an empty arraylist
+
+O(N2) to add N things to an array !!!!!!!!!!!!!!
+
+instead, over allocate, make array bigger than needed
+add//remove at index
+if adding or removing - O(n-i) because we have to shift elments
+
+adding to the back
+big O runtime of addtoBack?
+usually constant time O(1)
+sometimes O(N) when we grow and the size is too big
+take an average
+perform N add operations , count total number of steps in bigO
+avg = total/N
+
+total number of copies of elements between all arrays
+N/4 for elements copied one time
+N/4 + 2N/8 + 3N/16 + 4N/32 ....
+total in bigO = O(N)
+
+for any individual add - costs is = O(N)/N = O(1)
+averaging is the amortized cost
+a bunch of operations, find total time, divide by N, get the average
+
+arraylists
+for (var x : list) //look at all elements in the collection
+iterators similar to pointers
+
+iterator interface in java
+boolean hasNext();
+T next(); //returns next element in set and adcances the iterators - cant get element without also moving it forward
+void remove(); removes most recent thing from next
+
+class myCollection implements Iterable<T> {
+iterable T interface has one method in it,
+@Override
+public Iterator<T? iterator(){
+return new myIrerator(
+
+create a new iterator and return it
+)
+}
+class myIterator implements iterator<T> {
+hasNext
+next
+remove
+}
+}
+
+for (var x: collection)
+  body
+    translated
+      var iterator = collection.
+        while (iterator.hasNext)
+          var x = iterator.next();
+          body
+    }
+
+
+sorting algorithms with theoretical optimal bigO
+Recursion
+  recursive method is one that calls itself
+
+recursive calls need to be for "easier" problems
+need base cases
+  so easy , immediately know the answer
+
+  f(4)
+  f(3)
+  f(2)
+
+stack frame
+
+if stack frame dont all fit on the stack - stack overflow
+
+
+divide and conquer
+big problem split into smaller problems
+solve them recursivley
+combine results
+
+binary search recursive
+keep track of where binary searching
+pass range of values as parameters
+
+private binarySearch(arr, needle, begin, end){
+
+  if(beg == end){
+  return beg
+  }
+
+  middle = beg + end/2
+
+  if(arr(mid ) == needle)
+    return middle
+  if(needle < arr[mid]){
+    //means need to search left side of sorted arrays
+    return binarySearch(arr,needle,beg,mid)
+  }
+  else (needle > arr[mid])
+    return binarySearch(arr,needle,mid + 1,end)
+
+public driver method
+that returns the binary search
