@@ -148,9 +148,15 @@ class BinarySearchSetTest {
         intSet.add(5);
         intSet.add(4);
         intSet.add(2);
+
+
         assertTrue(intSet.contains(2));
         intSet.remove(2);
+
         assertFalse(intSet.contains(2));
+
+        //testing trying to remove an element not in the set
+        assertFalse(intSet.remove(6));
     }
 
     @Test
@@ -237,6 +243,11 @@ class BinarySearchSetTest {
         assertEquals(5, compSet.first());
         assertEquals(1, compSet.last());
         //expected to be in reverse order because of the myComp Comparator made
+
+        //testing comparator method
+        assertTrue(compSet.contains(5));
+        assertTrue(compSet.contains(1));
+        assertEquals(myComp, compSet.comparator());
 
     }
 

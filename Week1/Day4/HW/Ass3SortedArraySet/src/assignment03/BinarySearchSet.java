@@ -38,6 +38,7 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
         if (set_.length == 0){
             throw new NoSuchElementException("set is empty");
         }
+        //first element in the set
         return set_[0];
     }
 
@@ -46,6 +47,8 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
         if(set_.length == 0){
             throw new NoSuchElementException("set is empty");
         }
+        //last element in the set
+        //-1
         return set_[this.size_ - 1];
     }
 
@@ -100,12 +103,14 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
         int newA = this.size();
         //after the for loop, if the new array is greater
         //return true, meaning that it grew
+        //even if all elements trying to add are not, still true
         return newA > og;
 
     }
 
     @Override
     public void clear() {
+        //deleting array
         if(this.size_ > 0) {
             size_ = 0;
         }
@@ -113,7 +118,8 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
 
     @Override
     public boolean contains(E element) {
-
+        //binary search of the element
+        //it is in the set if index is >= 0
         int index = binarySearch(element);
         if(index >= 0){
             return true;
@@ -125,11 +131,14 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
     @Override
     public boolean containsAll(Collection <? extends E> elements) {
 
+        //looping through the elements passed in as a collection
+        //if one of the elements are there, returns false
         for(E obj: elements){
             if(!this.contains(obj)){
                 return false;
             }
         }
+        //return true of all elements are present
         return true;
     }
 
@@ -253,7 +262,6 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
                 if (midVal == null) {
                     throw new NullPointerException("not comparable");
                 }
-
                 //comparing the midval to the element
                 //saving
                 comparison = midVal.compareTo(element);
@@ -263,12 +271,10 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
                 //if less than zero, target is larger than mid
                 //start is set to mid + 1
                 startPoint = mid + 1;
-
                 //if greater than zero, target is smaller than mid
                 //
             } else if (comparison > 0) {
                 endPoint = mid - 1;
-
             } else {
                 //comparison is 0, Element found
                 return mid;
