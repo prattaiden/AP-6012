@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TimingEXPAdd {
-    private static final int ITER_COUNT = 101;
+    private static final int ITER_COUNT = 1001;
 
    public static BinarySearchSet<Integer> timingSet = new BinarySearchSet<>();
     public static List<Integer> elementsToAdd = Arrays.asList(2, 4, 30, 8, 10, 100, 3, 56); //eight elements

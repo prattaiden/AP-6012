@@ -74,7 +74,7 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
                 insertionPoint = -(insertionPoint + 1);
             }
             // Shift the elements to the right, starting from the insertion point,
-            // to make space for the new element.
+            // to make space for the new element. //second point, same array
             System.arraycopy(set_, insertionPoint, set_,
                     insertionPoint + 1, size_ - insertionPoint);
             // Assign the new element to the insertion point and increment the size of the set.
@@ -196,10 +196,17 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
             }
         }
 
-        public void remove(){
-            //??
-            Iterator.super.remove();
+        public void remove() {
+            //check position in the set it is called on
+            if (position_ < 0) {
+                //calling remove method from BSS class
+                //removing the latest position to be called by the next method
+                BinarySearchSet.this.remove(set_[position_ - 1]);
+                position_--;
+            } else {
+                throw new UnsupportedOperationException("cannot remove element from empty list");
 
+            }
         }
     }
 
@@ -217,10 +224,13 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
         tempArray = null;
     }
 
+    public int getCapacity(){
+        return capacity_;
+    }
+
     //binary search from tree set
     private int binarySearch(E element) {
         //initializing starting points for the binary search
-        //low is the start while high is the end
         int startPoint = 0;
         int endPoint = size_ - 1;
         int comparison;
@@ -230,30 +240,42 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
         while (startPoint <= endPoint) {
             // >>> right shifting to ensure non-negative midpoint
             int mid = (startPoint + endPoint) >>> 1; //same as /2
+            //if a custom comparator is given in the constructor
+            //uses it
             if (comparator_ != null ){
                 comparison = comparator_.compare(set_[mid], element);
             }
+            //otherwise uses natural order and compareTo method
             else {
                 //natural order
                 Comparable<? super E> midVal = (Comparable<? super E>) set_[mid];
 
                 if (midVal == null) {
-                    throw new NoSuchElementException("not comparable");
+                    throw new NullPointerException("not comparable");
                 }
+
                 //comparing the midval to the element
                 //saving
                 comparison = midVal.compareTo(element);
             }
 
             if (comparison < 0) {
+                //if less than zero, target is larger than mid
+                //start is set to mid + 1
                 startPoint = mid + 1;
+
+                //if greater than zero, target is smaller than mid
+                //
             } else if (comparison > 0) {
                 endPoint = mid - 1;
+
             } else {
-                return mid; // Element found
+                //comparison is 0, Element found
+                return mid;
             }
         }
-        return -(startPoint + 1); // Element not found, return the insertion point
+        // Element not found, return the insertion point
+        return -(startPoint + 1);
     }
 
 }

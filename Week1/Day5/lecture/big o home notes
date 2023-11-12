@@ -1,0 +1,95 @@
+BIG O notes home
+
+describes how the time taken by a program scaled with the amount of data it has to work on
+
+complexity of program
+
+linear search:
+sequential search
+brute force, simple loop
+Big O time complexity is linear O(N)
+
+Stack:
+last in first out data structure
+even if doubled data it takes same time since it is independent with the top value
+O(1) constant time complexity
+
+bubble sort:
+sorts a lsit of items into numberic or alphabetical order
+scans list comparing pairs of values swapping if necessarily
+for n data , list is scanned n-1 times
+quadratic complexity
+O(N^2)
+can enhance bubble sort
+,inner loop can run one less time
+(N^2 - N)/2
+dominant term is still n^2
+
+
+Logarithms
+inverse of exponentiation
+
+
+Binary Search::::
+used to search an ordered list for a particular value
+divide and conquer
+target compared with middle value
+recursive, solving smaller versions of same problem
+performance degredation is not terribly significant
+
+doubling the amount of data only requires one extra chop
+
+Big O is logarithmic
+O(log n)
+
+
+Merge Sort:
+divide and conquer approach
+splits list into several sub lists
+until it only contains one item, so it is sorted
+lists merged back together after sorted
+pairs of sub lists merge together , sorting as it goes
+
+merging process is hte most expensive part of hte merge sort
+have to use 8 append operations
+then another 8 append operations
+then another 8 append operations , for list of 8, total of 8X3
+big O time complexity of this is a cross between linear and logrithmic
+linearrithmic
+
+O(n log n)
+
+if n  = 8, sort does n*3
+
+long2N = 3 so this is n*log2N
+
+summary:
+
+constant O(1) - time is fixed
+-ideal
+-push, pop
+-time taken is independent of the amount of data
+
+Linear O(N)
+-time is proportional to amount of data
+-good,
+-linear search, counts items in list, compare a pair of strings
+
+QuadraticO(N^2)
+-time taken is proportional to the amount of data squared
+-more data ,more time to process
+-bubble sort, selection sort
+
+Polynomial O(N^constant)
+time take is proportional to amount of datra raised to power of a constant
+
+Logarithmic O(long n)
+-time taken is proportional to the logarithm of tge amount of data
+-binary search a sorte list, binary tree, divide and conquer
+
+Linearrithmic O(n log n)
+-time taken is proportional to the logarithm of the amount of data, multiplied by amount of data
+-merge sort
+
+exponentiation O(constant^N)
+-time taken is proportional to a constant raised to the power of the amount of data

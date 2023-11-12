@@ -66,10 +66,15 @@ class BinarySearchSetTest {
         // Add multiple elements at once
         List<Integer> elementsToAdd = Arrays.asList(2, 4, 6);
         assertTrue(set.addAll(elementsToAdd));
+        List<Integer> duplicateToAdd = Arrays.asList(3,1,5);
 
         //testing contains all
         assertEquals(6, set.size());
         assertTrue(set.containsAll(elementsToAdd));
+
+        //testing adding duplicates
+        assertFalse(set.addAll(duplicateToAdd));
+        assertEquals(6, set.size());
 
         //--------------------------TESTING ITERABLE---------------------------------------\\
         for (int e : set) {
@@ -120,6 +125,9 @@ class BinarySearchSetTest {
         BinarySearchSet<Integer> emptySet = new BinarySearchSet<>();
         //tests for empty set func
         assertTrue(emptySet.isEmpty());
+        emptySet.add(1);
+        assertFalse(emptySet.isEmpty());
+        assertEquals(emptySet.size(),1);
     }
 
     @Test
@@ -159,7 +167,89 @@ class BinarySearchSetTest {
         assertEquals(intSet.size(), 1);
     }
 
+    //------------------------------TEST DUPLICATE---------------------------------------\\
 
+    @Test
+    public void testAddingAndRemovingDuplicates(){
+
+        BinarySearchSet<Integer> intSet = new BinarySearchSet<>();
+        intSet.add(5);
+        intSet.add(4);
+        intSet.add(2);
+        assertEquals(3, intSet.size());
+
+    }
+
+    //----------------------------TEST GROW ARRAY-----------------------------------------\\
+
+    @Test
+    public void testGrowArrayHelper(){
+        BinarySearchSet<Integer> test = new BinarySearchSet<>();
+
+        //capacity is default set at 10
+        assertEquals(10, test.getCapacity());
+
+        test.add(5);
+        assertEquals(test.first(), 5);
+
+        //grow array, expected to double and give 20
+        test.growArray();
+
+        assertEquals(20, test.getCapacity());
+
+    }
+
+    @Test public void testGrowArrayInAddMethod(){
+        BinarySearchSet<Integer> growSet = new BinarySearchSet<>();
+        //expect it to need to grow array after ten elements are added
+        List toAdd1 = Arrays.asList(1, 2, 3, 4, 5);
+        growSet.addAll(toAdd1);
+        assertEquals(10, growSet.getCapacity());
+        assertEquals(5, growSet.size());
+
+        List toAdd2 = Arrays.asList(6, 7, 8, 9, 10, 11);
+        growSet.addAll(toAdd2);
+        assertEquals(20, growSet.getCapacity());
+        assertEquals(11, growSet.size());
+    }
+
+    //------------------------TEST COMPARATOR TEST---------------------------------\\
+
+    public class MyDescendingComparator implements Comparator<Integer>{
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            return o2.compareTo(o1);
+        }
+    }
+
+    @Test
+    public void testComparatorCustom(){
+        MyDescendingComparator myComp = new MyDescendingComparator();
+
+        //using the constructor where I pass in a custom comparator
+        BinarySearchSet<Integer> compSet = new BinarySearchSet<>(myComp);
+
+        List toAdd = Arrays.asList(1, 2, 3, 4, 5);
+        compSet.addAll(toAdd);
+        assertEquals(compSet.size(), 5);
+
+        //asserting the positions of the elements
+        assertEquals(5, compSet.first());
+        assertEquals(1, compSet.last());
+        //expected to be in reverse order because of the myComp Comparator made
+
+    }
+
+//    @Test
+//    public void testToArray(){
+//        BinarySearchSet<Integer> intSet = new BinarySearchSet<>();
+//        intSet.add(1);
+//
+//        Integer[] toArrayTest = intSet.toArray();
+//
+//        //compare the content of toArrayTest with the expected contents, 1
+//        assertArrayEquals(new Integer[] {1}, toArrayTest);
+//    }
 
 
 
