@@ -1,0 +1,129 @@
+quick sort
+
+merge a pain because of extra array
+
+? sort
+? put small in left part and large in right part
+sort left
+sort right
+done
+
+
+quick sort
+  base case
+  index : partition(array, pivot) pivot decides if something is big or small,
+  quicksort(beg... index) left
+  quicksort(index ... end) right
+
+  pivot >= dividing point between big / small
+  median is best because left/right pieces are the same size
+
+
+int -index of pivot value after separating- partition(arr , begin, end , pivot )
+
+small stuff starts at beginning and move forward
+big stuff start at big index and move backwards
+then pivot goes in middle when they meet
+
+simple in place algorithm
+track "end"
+go left -> right
+if I find a "big" element , swap to end decrement end index
+
+partition algorithm
+==========================================================================================
+Swap the pivot to the end of the array
+left = 0, right = just before the end
+while not done:
+    while arr[left] < pivot: increment left index
+    //left points to an element on wrong side of the pivot
+    while arr[right] > pivot: decrement right index
+    //right points to an element on the wrong side of the pivot
+    if left is before right:
+        swap left/right
+swap the pivot from the end into the correct spot, swap it with the left pointing thing
+=========================================================================================
+
+array of two elements is hard case
+
+QUICK Sort
+partiton
+sort left
+sort right
+base case, piece with one element ,
+each partition call moves elements closer to where they need to be
+
+
+run time analysis (big O)
+O(N) partition
+
+
+total partition work is always O(N)
+runtime is O(N) * # of levels
+
+best case fewest # of levels
+ - when splitting pieces roughly in half each time, pivot choice is close to medium each time
+ - stop when pieces are size 1 or 0
+ - log(N) levels , NlogN best case
+
+worst case
+  -lop sided splits
+  -ex: pivot == min value
+  -N levels
+  -N levels * N work per level
+  -O(N^2)
+
+average case
+  -if pivots are in 25th-75th percentile runtime is O(NLOGN) - so same as best, good algo!
+
+
+pivot selection:
+  random - avoid worst cases , chance of repeated is very low
+  middle value
+  first / last - worst, if sorted or reverse sorted results in N^2
+  median of a small number of values
+
+good pivot algorithm approximates the median
+
+partition is generally useful
+
+left piece
+  compare (a[i] , pivot)<= 0
+
+right piece
+  compare (a[i], pivor) >0
+
+boolean function to check if true or  false
+
+bolean Predicate(element)
+many standard libs have a partition function that takes a predicate function
+
+Implementation advice:
+
+quick sort is easy
+partition is hard
+
+test partition a lot before quick sort
+  1,2 element array
+  even vs odd lengths
+  min/max values as pivot
+  duplicate values of the pivot?
+
+assignment 4 timing
+f(N) - think big O
+d(N) - my data
+look d(N)/f(N)
+if f(N) is too big - goes to 0 quickly
+f(N) is too small - goes up too quickly d/f
+if f(N) is 'right' - roughly constant 
+
+
+//MIDTERM
+  sorting algorithms
+    understand where the cases come from
+
+      f(i=0 ... n) N times
+        for(j = n; j > 0; j/=2) logN times because cutting in half over and over again - O(NlogN)
+          O(1)
+
+  <? super comparalbe ? extends T

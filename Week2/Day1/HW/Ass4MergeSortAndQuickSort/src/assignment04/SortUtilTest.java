@@ -19,7 +19,8 @@ class SortUtilTest {
             arrayList.add(2);
             arrayList.add(8);
             arrayList.add(1);
-            arrayList.add(9);
+//            arrayList.add(9);
+//            arrayList.add(3);
 
             // Call the mergesort method
             mergesort(arrayList, Integer::compareTo);
