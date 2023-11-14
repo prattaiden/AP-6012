@@ -1,0 +1,32 @@
+Aiden Pratt
+Working with Melanie Prettyman and Lab05
+
+What activities did you do as the driver? What activities did you do as the navigator?
+As the driver, I work on the computer and discuss with my navigator what we should implement in our methods. The driver does the coding while the navigator gives instructions. The navigator must also review the code while the driver is implementing it.
+
+
+
+What are the advantages and disadvantages of serving in each role?
+The advantage of the driver is that I can try things on the computer and have someone additional to give suggestions on what I can do. 
+An advantage to the navigator is that I can read the instructions quickly and explain important steps to the driver.
+The disadvantage to both positions that is that it is possible that the navigator and the driver will disagree and be less productive while working in the team. Both positions might also feel pressure to do things correctly. 
+
+
+How often did you and your partner switch roles? Did you switch often enough?
+We switched roles twice. Yes that was adequate. 
+
+
+Which is your preferred role and why?
+I preferred being the driver because I can type quickly and I was able to implement some of my own ideas while also getting feedback from the navigator. 
+The navigator has pressure to be doing things correctly just as much as the driver.
+
+
+Explain why this is a BAD test case for your method: assertEquals("bird", MedianSolver.median(new String[]{"bird", "cat", "dog", "ant"}))
+This is a bad test case because the string implemented in the test case is an even number so it is not certain which will be returned between bird and cat. There is no clear median in this list.
+
+
+Explain how you could change the test to make it "valid" and explain how you could change the specification so that this is considered a "good" test.
+
+This test could be changed by implementing a fifth element in the array of Strings such as "elephant". This way we know that "cat" is the median alphabetically. 
+
+

@@ -2,6 +2,9 @@ package assignment03;
 
 import java.util.*;
 
+
+//Aiden Pratt
+
 public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E> {
 
     private E[] set_;
@@ -35,7 +38,7 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
 
     @Override
     public E first() throws NoSuchElementException {
-        if (set_.length == 0){
+        if (isEmpty()){
             throw new NoSuchElementException("set is empty");
         }
         //first element in the set
@@ -44,7 +47,7 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
 
     @Override
     public E last() throws NoSuchElementException {
-        if(set_.length == 0){
+        if(isEmpty()){ //size_
             throw new NoSuchElementException("set is empty");
         }
         //last element in the set
@@ -110,10 +113,7 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
 
     @Override
     public void clear() {
-        //deleting array
-        if(this.size_ > 0) {
-            size_ = 0;
-        }
+        size_ = 0;
     }
 
     @Override
@@ -163,10 +163,27 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
 
     @Override
     public boolean removeAll(Collection elements) {
-        for(Object obj : elements){
-            this.remove((E)obj);
+        List<E> elementsToRemove = new ArrayList<>(elements);
+        boolean anyRemoved = false;
+
+        for (E element : elementsToRemove) {
+            if (this.contains(element)) {
+                this.remove(element);
+                anyRemoved = true;
+            }
         }
-        return true;
+
+        return anyRemoved;
+
+//
+//       boolean removed = false;
+//        for(Object obj : elements) {
+//            if (this.contains((E) elements)) {
+//                this.remove((E) obj);
+//                removed  = true;
+//            }
+//        }
+//        return removed;
     }
 
     @Override
@@ -207,16 +224,15 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
 
         public void remove() {
             //check position in the set it is called on
-            if (position_ < 0) {
+            if (position_ == 0) {
+                throw new IllegalStateException("cannot remove element from empty list");
+            }
                 //calling remove method from BSS class
                 //removing the latest position to be called by the next method
                 BinarySearchSet.this.remove(set_[position_ - 1]);
                 position_--;
-            } else {
-                throw new UnsupportedOperationException("cannot remove element from empty list");
-
             }
-        }
+
     }
 
 

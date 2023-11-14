@@ -6,6 +6,8 @@ import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//Aiden Pratt
+
 class BinarySearchSetTest {
 
     //--------------------------------Add Method Tests---------------------------------------\\

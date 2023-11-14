@@ -1,0 +1,134 @@
+Mergesort
+
+bubble sort/insertion sort
+cost determined by swap
+
+selection sort O(N) swaps with O(N^2) run time - because of O(N^2) comparisons
+any algorithm is Ω (# comparisons)
+
+show min number of comparisons for any sorting algorithm
+
+examine all possible "comparison sorting" algorithms
+will find a worst case lower bound for all of them : number of comparisons
+
+any algorithm has to do enough comparisons to figure out the original order
+1,2,3,4
+
+compare first and second element, first<second, 12 possibilities now
+12 out of 4! ,24, split possiblities in half
+
+compare second and third elements ,  2<3, now 4 possibilities
+
+compare first and forth, first>last
+know original order was 2,3,4,1
+
+
+comparisons
+what comparisons to do in what contingencies , tree
+
+how many "leaves" - (bottom nodes, array orders) are there for a length of N array? N! orderings , need paths from top down to each of the N factorial orders
+
+A "perfect" algorithm splits the possiblities exactly in half with each comparison
+
+    < N!
+  N!/2   N!/2
+N!/4      N!/4
+N!/8
+1
+
+cut in half until 1 remaining log(N!) steps
+
+log(N*(N-1) * (N-2)) multiplication inside log becomes addition
+log(N) + log(n-1) + log(N-2)
+N terms = logN
+O(NlogN)
+
+for any comparison sort, for some inputs, they will require Ω(NlogN) comparisons
+so at least the N runtimes must be O(NlogN) worst case
+
+SPEED LIMIT ^^
+
+Divide and conquer algorithm , sort array in half
+sort left and right independently
+compare smallest of each half
+copy smaller one down
+
+
+void MergeSort(arr)
+  if(length <2){return already sorted}
+    mergesort (left half)
+    mergesort (right half)
+    merge (left,right)
+
+  merge (left, right)
+    make new array to hold the final merged result
+
+  for(l = 0, r = 0; l < left size && r < right side ;)
+  smaller = Math.min(left[l], right[r])
+  out[i]  = smaller i++
+  if(left was smaller, l++ )
+  else(r++)
+
+  while left has more elements
+    copy
+  while right has more elements
+    copy
+
+  because one half is empty, only one loop runs
+
+recursive method makes sure we do the right calls to merge in the right order
+all the work is in merge
+
+analysis of mergesort and merge method
+for loop is between N/2 and N
+O(N) at the end, copied all the elements from the left and right into the output
+O(N) merge
+
+N elements - O(N) merge
+n/2 n/2 - n/2+n/2 merges ->O(N)
+N/4 N/4 N/4 N/4 - 4 merges of size N/4 O(N)
+
+log(N) levels each doing O(N) work
+O(N log N) runtime
+
+instead of allocating two arrays
+
+better implementation of halves
+pass start/end indeices to all methods
+call [0 - length/2] instead of copying new array
+
+driver method which calls merge sort form 0, length
+  public MergeSort(arr){
+    temparray of size N
+    MergeSort(arr, 0, arr.length, temparray)
+  }
+
+array of size two
+[1,0]
+call merge sort on it
+merge sort ([1,0])
+merge sort ([1])
+mergesort ([0))
+merge([1],[0]), copies between arrays
+
+insertion sort [1,0]
+comapre 0,1
+swap
+done
+
+IF SIZE < THRESHOLD INSERTION SORT INSTEAD
+
+find that threshold ?
+
+
+divide and conquer summary
+sort two halves
+merge
+
+tomorrow:
+similar algorithm where after we sort the two pieces we're all finished
+
+lab and next assignment
+
+driver, use computer
+navigator , telling driver what to do
