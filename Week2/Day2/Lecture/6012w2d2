@@ -115,7 +115,7 @@ d(N) - my data
 look d(N)/f(N)
 if f(N) is too big - goes to 0 quickly
 f(N) is too small - goes up too quickly d/f
-if f(N) is 'right' - roughly constant 
+if f(N) is 'right' - roughly constant
 
 
 //MIDTERM

@@ -1,0 +1,151 @@
+linked lists
+
+List ADT stores a collection in a user specified order
+
+get(index)
+set(index,val)
+add(index, val)
+remove(index)
+
+ArrayList
+  implements ADT using an array
+
+myList = arrayList(INTEGER)()
+
+  for(i=0 ..N)
+    myList.insert(0,i); )O(N^2)
+
+  for(i = n -1 -> 0)
+    myList.append(i) ]O(1)amortized O(N)
+
+  for(i=0..N)
+    myList.insert(size/2, i)
+
+
+get
+
+T get(int index){
+  return arr[index]
+}
+
+square brackets
+array is a pointer
+all square brackets does is take the array and add the index times the size of an element
+
+Random Access : get/set at arbitrary index
+
+add or remove far from end
+O(N)
+
+1 2 3 4 5
+
+class LinkedList{
+
+class Node<T>{
+  T data
+  Node<T> next
+}
+
+node<T> head; //pointer to the first node , reference to the first node, every node has a pointer to the next node
+for the last node , next == null
+
+LL<int> 1st
+  for(Node<Integer>N = list.head; n !=null; n=n.next){
+    print (n.data)
+  }
+
+first
+head - 1-2-3-ø
+
+n=head
+
+
+writing a list method with node and head
+
+T get (int index){
+  var n = head;
+  for(i=0...index)
+    n=n.next
+  return n.data //n is the node with data in it, get back data to get the T
+}
+
+var 1st = linkedList<INT>(){
+  for(int i = 0; i < list.size(); i++){ //runs N times
+    print(list.get(i)) - O(i) //overall run time for the for loop is O(N^2)/
+  }
+}
+//go through list keep track of where they are with a node without accessing a node directly - iterator
+
+solution
+  provide an iterator
+  for (user elem: linkedList)
+    print (elem)    //O(N) total good
+
+
+class LLIterator implements iterator<T>{
+  Node position;
+
+  hasNext()
+
+  next()
+
+  remove()
+
+  remove requires reference to the node before the one i want to remove and change it
+}
+
+boolean removeFirst(T Val){
+if(head == null ){return false;}
+if(head.data.equals(val)){head=head.next}
+  for(Node n = head; n.next !=null; n=n.next){
+    if(n.next.data.equals(val)){
+      n.next = n.next.next;
+      return true;
+      }
+  }
+}
+
+trick - replace haed with header node
+
+header member variable points to node with ø data in it
+
+header -> ø -> 1 -> 2 ->3 -> ø
+
+create my list and set header = newNode (null)
+
+1st real node = header.next, so i can modify header.next like any other node
+
+add previous pointers to every node
+
+upgrade:
+node
+T data
+Node next, previous
+
+nodes point at the next and previous elements
+
+n=node to delete
+have to update two things
+n.previous.next = n.next
+n.next.previous = n.previous
+cost is extra pointer per node but worth it , doubly linked list
+
+Linked List
+  data order is explicitly stored in pointers
+
+  no more "shifting" when we add/remove
+  all operations are local - everything is O(1)
+
+Downsides: binary search on a linked list
+  no fast random access , binary search is O(N)
+  exact wrong design for modern cpus/memory systems
+  LinkedLists bad
+
+  classic data structure to understand what is going on with pointers
+
+recursiveSize(Node n){
+  if(n=null){return 0}
+    return 1 + recursiveSize(n.next)
+}
+
+bad implementation of size O(N) run time and space, every element in list needs a stack space

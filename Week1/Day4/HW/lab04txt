@@ -4,6 +4,9 @@ The second and third binarySearch tests are failing
 
 2. What are the values of arr and goal passed in to binary search?
 The value arr is the elements in the array , and the goal is the element that binary search is looking for to be not null. So if the goal element is in the arr, it returns false, meaning that value is not null
+The values are : int[] arr1 = new int[] { 1, 2, 3, 4, 5 };  and int[] arr2 = new int[] { 5, 10, 15, 20, 25 };
+The goals are : 2 , 0, 20 , 18
+
 
 3. For each of the two cases of binarySearch that are failing, which return statements are they executing in error (is it returning true when it should be returning false, or the other way around)?
 The second test is returning true which is causing it to print out the fail statement.
@@ -11,10 +14,12 @@ The third test is returning false which is causing it to print out the fail stat
 
 4. What is the bug in binarySearch? How do you fix it?
 The bug in this binarySearch is that it is checking the index in the array but not the value of it
+The if condition that says if(goal == mid) is just checking the index rather than the value of the index. So it should look like if(goal == arr[mid])
 
 
 5.Which loops appear to be inifinite?
 Loop #2 because be is depending on *= with a, a is constantly growing more negative as it is -= to c which is -1.
+loop#4 is also infinite 
 
 6. For the loops that you found to be infinite, briefly explain why they are never progressing.
 Loop #2 because be is depending on *= with a, a is constantly growing more negative as it is -= to c which is -1.

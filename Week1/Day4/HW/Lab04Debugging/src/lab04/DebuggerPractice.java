@@ -11,10 +11,10 @@ public class DebuggerPractice {
 
     // Part 1
 
-//     if(Part1.binarySearch(arr1, 2) == false) System.out.println("1Binary search is broken");
-//     if(Part1.binarySearch(arr1, 0) == true) System.out.println("2Binary search is broken");
-//     if(Part1.binarySearch(arr2, 20) == false) System.out.println("3Binary search is broken");
-//     if(Part1.binarySearch(arr2, 18) == true) System.out.println("4Binary search is broken");
+     if(Part1.binarySearch(arr1, 2) == false) System.out.println("1Binary search is broken");
+     if(Part1.binarySearch(arr1, 0) == true) System.out.println("2Binary search is broken");
+     if(Part1.binarySearch(arr2, 20) == false) System.out.println("3Binary search is broken");
+     if(Part1.binarySearch(arr2, 18) == true) System.out.println("4Binary search is broken");
 
 
      //Part 2
