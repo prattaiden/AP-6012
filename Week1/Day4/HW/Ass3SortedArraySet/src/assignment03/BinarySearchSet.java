@@ -195,6 +195,7 @@ public class BinarySearchSet<E> implements assignment03.SortedSet<E>, Iterable<E
     public E[] toArray() {
         E[] array = Arrays.copyOf(set_, this.size());
         return array;
+
     }
 
     //---------------------------------Iterator Class--------------------------------------------\\

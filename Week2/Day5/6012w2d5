@@ -1,0 +1,174 @@
+6012w2d5
+
+Trees
+new ADT -
+model for a different way of organizing collection of data
+
+other ADT specifies relative positon in some sequence order
+
+sequence containers, other data structures
+  relationships between elements are "comes before" or "comes after"
+
+filesystem
+  relationships we care about are "contained in "
+
+          historical collections trees
+        users
+      users/a
+    desktop
+    documements
+
+
+roots are on the top
+
+for any node , there is only 1 path to the root
+
+leaf node
+
+Desktop is the parent of myfile.txt , child of Desktop
+leaf node has no children
+The top of a tree is called the "root" node (CS folks draw trees upside down)
+The nodes directly below a node are its "children"
+Nodes anywhere below a node are its "descendents"
+The node (one node, singular) directly above a node is its "parent"
+Any node above a node is an "ancestor"
+Nodes with the same parent are "siblings"
+Nodes without children are "leaf nodes"
+Nodes with children that aren't the root are "internal nodes"
+
+inheritance is described by a tree
+            Object
+siblings  --    String   Student - internal nodes
+                    TA - leaf node
+
+trees must have single unique root
+graph , similar often think of as nodes with lines between them
+graphs can have loops and dont have to have a root
+
+a subtree is a node and all of its descendents
+
+depth: length of the path to the root
+height: max depth of any node in the tree
+ordered trees
+order of siblings matter
+
+unordered Trees sibling order doesnt
+
+
+doc - toc
+- chapter 1 - sec 1 - par1- par 2
+-chapter 2
+order matters because there is an order these should come in
+
+
+using a tree in java
+
+class Tree {
+
+  class Node{
+    T data
+    List<Node> children // could be any sort of collection depending how we want order
+    Node parent
+    }
+
+  Node Root
+//explicit linked tree
+
+}
+
+
+Binary tree
+  every node has 0 1, 2 children
+  counting number of comparisons needed for sorting
+
+"full tree " - every node has 0 or 2 children, no nodes with 1child
+
+complete tree - often comes up - filled in top to bottom, left to right
+  start atthe root and then fill in
+
+trees as collections
+  collectiopns are iterable
+  how do we iterate through all the elements in a tree
+
+instead of iterator use next() method
+  go to each node and call visit (n.data)
+
+binary tree
+visit nodes in certain order
+increasing depth order
+"top to bottom"
+"left to right"
+starting with nodes at lowest depth, vist all them , then go to next depth visit all those Nodes
+depth order traversal
+          1
+        2   3
+      5       4
+                6
+
+depth order traversal algorithm
+  collection of nodes to visit
+  while !nodestovisit collection is not empty
+    n = ntb.get
+  collection.add(root)
+  //when get to node, add left add right if they exist , not null
+  iterative approach
+
+recursive traversals
+  //visit all node sin the subtree rooted at n
+  traverse (Node n){ //use traverse to get ot all of them in the subtree
+    //base cases are leaf nodes
+    vist(n.data)
+    traverse(n.left)
+    traverse(n.right)
+
+  }
+
+            1
+       2        3
+     5            4
+                    6
+
+traverse(1)
+  visit(1)
+    traverse (2)
+      vist (2)
+        traverse(5)
+            visit (5)
+              base case, pop back to vist 2
+            base case, no more children
+ back in traverse 1
+  traverse(3)
+    vist (3)
+      traverse(4)
+        vist (4)
+          base case
+          traverse(6)
+              base case, no more children
+      finished
+  finsiehd base cases
+
+preOrder Traversal(Node n)
+  visit(n)
+  traverse(n.left)
+  traverse(n.right)
+
+PostOrder Traversal(n)
+traverse(n.left)
+traverse(n.right)
+visit(n.data)
+
+In Order traversal
+traverse (n.left)
+vist(n.data)
+traverse(n.right)
+
+special tree use in order traversal will vist all the elements in order
+
+3 4 5 * +
+3+(4*5)
+        +
+      3   *
+        4   5
+ expression tree
+ full tree
+ post order traversal

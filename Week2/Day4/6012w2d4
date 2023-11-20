@@ -1,0 +1,163 @@
+Stacks and Queues
+
+merge sort worst case is close to best case because the cpu can guess what is coming next and if it is correct it is much faster
+if it is wrong then it does not cost any times
+
+java standard library algorithm is tim sort , mix of a bunch
+key feature is that in real data there are often long sequences of values that are increasing or decreasing
+Tim sort algo notices and uses something like merge sort
+
+singly linked list class
+
+member variable
+Node<T> head;
+
+write constructor takes an array list
+
+SLL(ArrayList<T> list){
+  for(var x: list){
+    head = new Node(x, head)//next is pointing wherever the head is now
+  }
+}
+
+
+SLL(ArrayList<T> list){l
+  for(i - size -1; i >;
+    head = new Node(x, head)//next is pointing wherever the head is now
+  }
+}
+
+var tail = head;
+for (var x : list ){
+  if(head >= null){.....}
+  tail.next new Node (x, null)
+  tail = tail.next
+}
+
+
+new abstract data types
+bot store collection in use specified order
+only allows access of ends, extract from one end, insert at one end
+
+stack{ //keep track of method calls
+voild push(T val) //add t top
+T pop ()//remove(return top)
+T peek()//look at top
+}
+
+Linked List
+Array List
+
+implement a STACK with an ARRAYLIST
+
+class Stack<T> { //* on arraylist in a stack because if it has to grow it might get slower and not O(1)
+  ArrayList<T> data =
+  void push(T val){
+    data.add(val)
+  }
+  T pop(){
+    return data.remove(data.size()-1)
+  }
+  T peek(){
+    return data.get(data.size()-1)
+  }
+
+}
+
+class LLstack{ //cannot efficiently delete from the tail on a singly linked list
+  Node<T> head;
+
+  push{
+    add at  head
+  }
+  pop{
+    remove from head
+  }
+  peek{
+    return head
+  }
+
+}
+
+open Stack = ea
+  for char in input
+    if char is (,[,{
+      openstack.push(char)
+    if char is ), ], }
+      pop openstack
+    if open/char dont match
+      error
+
+    if stack not empty at end, erorr
+
+  "First in Last out"
+  "last in first out"
+  ADT
+  the most recent unmatched open symbol
+
+post fix notation
+  put the argg first
+    then put the operator
+
+3 45 * +
+everytime see a number , push to STACK
+see an operator, do operation , pop, the push
+
+evaluating post fixed expressions
+push opperands , when we see an operator, we pop 2 values , do the operation, and then push the result
+
+simple data structure
+push pop
+
+
+Queue data structure
+"first in first out" ADT "line"
+
+add to "back"
+remove from "front"
+
+QUEUE{
+enqueue - add
+
+dequeue - remove
+
+peekFront()
+}
+
+implementing a queue ADT
+
+qwertyuiopasdfghjklzxcvbnm
+
+LinkedListQueue singly
+enqueue // add to back
+  add to tail
+dequeue //remove from front
+  remove from head
+
+ArrayListQueue
+  AL data
+  enqueue
+  dequeue
+
+  circular array
+  keep track of front and size
+  avoid shifting bc not random access, always insert at back and always remove from the front
+
+  when out of space in array
+  dboule and copy to new array
+  throw an exception say its full
+
+
+  Dequeue "peak"s
+  double ended queue
+  add/remove front
+  add/remove back
+
+implement singly linked list
+implement a stack using it
+
+then an application that uses the stack , browser history
+when go to webpage one left is pushed onto a STACKwhen you hit back button, pop it off and navigate there
+forward stack, pushes page on to forward stack
+impleemnt a simulated web browser with navigate forward and back buttons
+handle stacks of urls
