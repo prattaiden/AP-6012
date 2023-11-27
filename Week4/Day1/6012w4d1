@@ -1,0 +1,189 @@
+AVL trees
+
+1,2,3,4,5
+
+  1
+    2
+      3
+        4
+          5
+
+binary search tree, resembles a linked list
+
+all methods O(height of tree)
+bad binary search tree
+
+use three as the root, root is the median, better tree, smaller height
+
+        3
+      2   4
+    1       5
+
+shape depends on the order elements are added, can't be controlled
+
+x                 y
+  y            x     z
+    z
+
+if y originally has a left, set to the right of x in the new picture
+
+y.left = x(y's parent)
+x.right = yold.left
+upadte xs' old parent
+
+this is a tree rotation , O(1)
+  minor adjustments to move some nodes around while keeping all relationships in tact
+
+  x                     y
+xl   y                x     z
+  yl    z           xl  yl
+
+single rotation (left rotation)
+as long as xl and and yl are shorter than z subtree, reduce the height by 1 by moving z up
+
+mirror image for right rotation
+
+      x           y
+    y           z   x
+  z
+
+if we have a binary search tree, cases where height can be reduced with O(1) operation
+
+as tree is modified, do rotations
+keep tree "good" - minimize height
+    O(logN)
+
+x is imbalanced
+    y
+  z
+
+height: 1
+height of null subtree is -1
+
+imbalance means absolulte value of height (left subtree ) - h (right subtree ) > 1
+
+height difference measure for imbalance
+AVL tree
+weird/implicit / indirect approach - red black tree
+red black tree has some nicer properties
+
+1,2,3
+
+  1
+    2
+h = -1 h = 0
+
+1
+  2
+    3
+
+node.height = max(h(left),h(right)) + 1)
+
+balancing
+fix - 2 h=1
+    1   3
+    h=0
+
+          2
+        1   3
+add 6
+
+
+        2
+      1   3
+            6
+
+add 5
+
+          2
+        1   3
+              6
+            5
+
+three is imbalanced now , will a single rotation fix this or not?
+
+3                         3                                     5
+  6                         5                                 3   6
+    5                    ø     6
+  ø
+  single rotate to pull the 5 up , another single rotate to pull 5 up again
+  went right and then left, double rotation , had to do two rotations
+
+            x               z
+          xl  y          x      y
+            z   yr     xl zl   zr  yr
+          zl  zr
+
+double rotation , imbalance but things arent in straight linked
+
+rebalance (node) - return new root of subtree
+detect imbalance at a node with grandchildren
+
+4 cases
+  zig zig, zag zag, zig zag, zag zig
+zig = left, zag= rightp
+
+
+zig zig
+    x
+  y
+z
+
+fix zig zig case by single rotate , rotate left child up, return left child, y
+
+      y
+    z   x
+
+
+zag zag, mirror image
+
+
+zig zag
+
+  left and then right
+
+      x                   y - return this
+    y                   z   x
+      z
+
+fix with a double rotation
+
+zag zig, mirror image
+
+add/remove can change height/balance by at most one
+
+rotations can fix imbalances of 1
+
+similarly to update height , stop going up when a node's height doesnt change
+
+add/remove are still O(height)
+did we make height O(logN)?
+
+how few elements can be put in AVL tree of a given height
+worst AVL trees of given height
+
+h= 0            x
+
+h=1               x
+                    y
+
+ h= 2               x
+                  y   0
+                z
+
+Nk = 1 + Nk-1 + Nk-2
+worst h=k-1 tree/ h=k-2 tree
+
+h is O(logN) h is roughly 2lg(N) in extreme worst case
+
+intuition , both subtrees are roughly half full
+
+
+
+RB tree red black tree
+every node is colored red/black
+red nodes cannot have red children
+all leaves are black
+all paths from root to the leaves have same number of black nodes
+
+Btree
