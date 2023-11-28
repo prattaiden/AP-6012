@@ -187,3 +187,10 @@ all leaves are black
 all paths from root to the leaves have same number of black nodes
 
 Btree
+
+assignment 06
+
+add/remove
+simplest if they are recursive
+
+add(val,node) - returns the new root of the subtree

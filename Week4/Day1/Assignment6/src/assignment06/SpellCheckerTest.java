@@ -59,11 +59,5 @@ class SpellCheckerTest {
 
     }
 
-//    @Test
-//    public void testExcpetions(){
-//        SpellChecker testSC = new SpellChecker(new File("fakefile.txt"));
-//
-//        assertThrows(FileNotFoundException.class,() -> testSC.;
-//    }
 
 }

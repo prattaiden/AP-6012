@@ -1,0 +1,171 @@
+
+
+default java stack size is 512 KB
+
+512kb / 50 byes per frame is the elements can fit before stack overflow
+10k frames
+
+recursive calls is O(height)
+so for a balanced bst height is log N
+
+
+priority queues and heaps -- ADT bst could be used to implement
+
+priority queue
+
+collection, access to only the minimum element
+
+add(T elem)
+peekMin()
+T removeMin()
+
+can have duplicate values
+
+relative importance
+
+tree PQ implements PQ
+AVL tree or balanced BST
+
+map adt
+put(k,o) - stores a key and a value, key used for look ups
+
+tree PQ implements PQ
+treeset<T> data
+
+add(T elem)
+data.add(elem)//using the method from treeset
+
+
+T peekMin()
+
+return data.min() //go as far left as possible
+
+T removeMin()
+
+data.pullFirst() //remove left most element // returns and removes
+
+O(log N)
+
+would like min at the root
+  completely sorting is too much work
+
+at each node, the value stored there is <= value of its children
+
+data structure is a heap
+heap property
+
+        1                   1
+      2   3               2    5
+    4 5   6 7           3   4 6   7
+
+not sorted, organized.
+
+require our tree to be complete - filled in top to bottom left to right
+with complete tree, easily represent using an array
+
+            0
+          1     2
+        3  4    5  6
+          9 10
+      as an array: 0,1,2,3,4,5,6 - stored a their index
+
+    4- parent -1 - (i-1)/2
+    left -9 - 2* i +1 - left child you can do this equation, dont have to store left child pointer ever , if >= size of array dont have that child
+    right - 10 - 2 * i +2
+
+add (T elem){
+  add elem to end of the arraylist //compare to parent, then grandparent, might have to keep moving up
+  //called percolateUp(size -1) //index of element to percolate, might be small element, bubble up until ordering is satisfied
+}
+
+percolateUp(index){
+while the index is not the root and the array[index] is < array[parent]
+swap parent with parent - continue up until dont have to swap
+index = parent index
+if i insert the new min, O(height) swaps, h = O(log N) because it is a complete tree
+}
+
+T peakMin
+  return arr[0] O(1)
+
+T removeMin() // now O(log N) worst and average case
+
+  ret = arr[0]
+  arr[0] = remove (arr.size -1) //steal bottom right value and stick it in the root
+  //still a complete tree
+  //but now the minimum is not in the right spot
+  percolateDown(0) //to fix the ordering
+  return ret ;
+
+percolateDown(index)
+  while arr[index] has children && arr[index] > one of the children
+    swap with smaller child
+    index = child's index
+
+20 line, a lot of possibilities to adjust for
+implementing, compute boolean canswapLeft(has to be a left child and it is smaller than parent) and canswapRight
+if cant do either, hit bottom or finished with method, ordering is fixed
+
+if can do one go that way
+
+if can do both, compare those two
+
+O(height) worst case
+
+//
+average case of percolateUp
+consider inserting at the median value
+complete trees are really bottom heavy
+
+row size 1   2    4   8
+top size 0   1    3   7
+
+percolatingUp the median is probably O(1)
+
+build a heap from an unordered array
+want a heap
+could sort, more work than needed
+
+copy unordered array
+  for(i = 0 - size)
+    percolateUp on i // slightly optimized for(x : array) - heap.add(x)
+    //got rid of arraylist operations just doing heap operations
+
+avg case O(N) //assuming a random shuffle
+worst caseO(NlogN)// descending order
+
+
+garaunteed O(N) heap algorithm:
+
+heapify
+unsorted array -> valid heap
+ in O(N) time
+  x
+h1 h2
+
+turn this whole thing into a valid heap at the end
+in unordered array, all of the leaf nodes are valid heaps
+
+        (i = n/2 ; i>= 0; i--)
+  for(last internal node -> root)
+    percolateDown(i)
+
+      combines increasingly larger heaps up the tree
+      building from bottom up to get heap in the end
+
+  will show that even if every node is percoloated as far as possible
+  we get O(N) total swaps
+
+
+                      n/16
+                      n/8        2 potential steps
+                      n/4        max # percolation steps is 1
+                      n/2        no percoloation
+
+    n/4*1 + n/2*2 + n/16*3 + n/32*4 + ...
+
+    n*i/2^i
+    shrinks to zero really fast
+    O(N)
+
+  heapify is O(N) bc total cost of all percolations is O(N)

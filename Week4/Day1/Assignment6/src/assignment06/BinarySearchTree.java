@@ -84,13 +84,13 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
     @Override
     public boolean add(T item) {
         if (item == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("item attempting to be added is null.");
         }
         if (this.contains(item)) {
-            return false;
+            return false; //item already exists in the BST, return false
         }
 
-        //find where item should be place? call recursive method
+        //calling the recursive add method which returns the node of where this item should be added
         else {
             root_ = addRecursive(root_, item);
             updateHeight();
@@ -141,8 +141,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
     public boolean addAll(Collection<? extends T> items) {
         //check if the items collection is null
         if (items == null) {
-            throw new NullPointerException();
+            throw new NullPointerException("items attempting to be added are null.");
         }
+
 
         boolean changed = false; //initialize a boolean variable changed, to keep track of whether any items were actually added into the tree.
 
@@ -222,12 +223,17 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
      */
     @Override
     public boolean containsAll(Collection<? extends T> items) {
+        if(items == null){
+            throw new NullPointerException();
+        }
+
+        //check each item
         for (T item : items) {
-            if (contains(item)) {
-                return true;
+            if (!contains(item)) {
+                return false; //return false if any item is not found in the set
             }
         }
-        return false;
+        return true;
     }
 
     /**
@@ -239,7 +245,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
     @Override
     public T first() throws NoSuchElementException {
         if (root_ == null) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("tree is empty");
         }
 
         Node current = root_;
@@ -268,7 +274,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
     @Override
     public T last() throws NoSuchElementException {
         if (root_ == null) {
-            throw new NoSuchElementException();
+            throw new NoSuchElementException("tree is empty");
         }
 
         Node current = root_;
@@ -318,6 +324,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
         }
 
         if (item == current.value_) {// Node to remove found, remove node
+
             //NODE HAS NO CHILDREN – replace this node with null in its parent node
             if (current.left_ == null && current.right_ == null) {
                 return null;
@@ -386,6 +393,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
      */
     @Override
     public boolean removeAll(Collection<? extends T> items) {
+        if(items == null){
+            throw new NullPointerException("items are null");
+        }
         boolean changed = false;
         for (T item : items) {
             if (remove(item)) {
@@ -427,6 +437,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
             list.add(node.value_);
             inOrderTraversal(node.right_, list);
         }
+//        else{
+//            throw new NullPointerException("empty");
+//        }
     }
 }
 

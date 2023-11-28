@@ -3,6 +3,7 @@ package assignment06;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 class BinarySearchTreeTest {
@@ -12,6 +13,7 @@ class BinarySearchTreeTest {
     @Test
     public void testAdd(){
         BinarySearchTree bst = new BinarySearchTree();
+
         bst.add(5);
         bst.add(3);
         //double adding should not work
@@ -49,6 +51,7 @@ class BinarySearchTreeTest {
 
         ArrayList nullItems = null;
         assertThrows(NullPointerException.class, ()-> bst.addAll(nullItems));
+        assertThrows(NullPointerException.class, ()-> bst.containsAll(nullItems));
 
         bst.removeAll(items);
         assertFalse(bst.containsAll(items));
@@ -71,6 +74,21 @@ class BinarySearchTreeTest {
         bst.clear();
         assertTrue(bst.isEmpty());
 
+        //TESTING NULL TREE
+        BinarySearchTree bst1 = new BinarySearchTree();
+        assertThrows(NoSuchElementException.class, ()-> bst1.first());
+        assertThrows(NoSuchElementException.class, ()-> bst1.last());
+
+        //single node, both first and last equal that 1
+        bst1.add(1);
+        assertEquals(1, bst1.first());
+        assertEquals(1, bst1.last());
+
+        bst1.add(2);
+        bst1.add(3);
+        bst1.add(4);
+        assertEquals(4, bst1.last());
+
     }
 
 
@@ -91,11 +109,18 @@ class BinarySearchTreeTest {
         arrayList.addAll(items);
 
 
-
-
        ArrayList arrayListTest = bst.toArrayList();
 
        assertEquals(arrayList, arrayListTest);
+
+       //pt 2, testing toarraylist with an empty bst and arraylist
+
+        BinarySearchTree emptyBST = new BinarySearchTree();
+        ArrayList emptyArray = emptyBST.toArrayList();
+
+       assertEquals(0, emptyArray.size());
+
+
     }
 
 }
