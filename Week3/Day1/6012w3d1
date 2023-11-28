@@ -1,0 +1,200 @@
+ADT sequence containers
+
+collections where user choose element order and it matters -- stacks and queues and list
+
+ADT user can add and remove elements and do other operations, data structure choose how elements are ordered
+
+sets:
+add , remove, contains
+
+unorderedArraySet(){
+bool add
+  append to list* O(1)
+
+contains
+  can't do binary search because it is unordered
+  linear search O(N) - average, O(1) - best case,
+
+remove
+  linear search + remove O(N)
+  can remove without shifting by swapping remove element with the end element
+
+
+}
+
+assignment 3
+
+add
+  binary search - only helps to avoid duplicates
+    +O(N) shifts
+    O(N) average case
+
+contains
+  binary search O(log(N))
+
+remove
+  like add
+  O(N) shifts in average case
+
+
+sorting data enables binary search
+shift kills us -
+
+
+linked list
+  can't jump to the middle
+
+doubly linked list
+  head
+  tail
+  middle
+
+doubly linked list, but no next or previous
+
+instead store next/previous binary search stops
+
+binary tree (nodes contain )
+
+"BST property"
+
+at each node all values in the subtree rooted at it left child are <= value at that nodesAnalogously for right subtree (>)
+
+class Node{
+  T data
+  Node left, right
+}
+
+search(Node n , T val)  - n is a node value but really a subtree , search recursive method
+  if(n.data == val)
+    return n
+
+  if data is not at n , look at all descendentts, how to figure out which side to look at , left or right
+  if data is greater thanb the value
+  if smaller look left, if bigger look right
+  if(n.data > value)
+    search(n.left val)
+  else
+    search(n.right val)
+
+  base case
+    null, empty subtree
+
+  convenient to return node which would be value's parent
+
+contains(val)
+  n = search(root, val)
+    searching top of tree first, the root
+    return n.data == val
+
+  add(val)
+    //handle empty tree
+    n=search(val)
+    if(value < n.data)//isnt equals, wasnt there already//should go there as a child of end//go to the left side because it is smaller
+    //n.left must be null, otherwise search would keep going there , if it didn't means nothing can be there
+      n.left == new node(val)
+    else if (val > n.data)
+      n.right = new Node(val)
+
+
+add(5,3,4,1,2,7)
+  root 5 //special case, children both null
+  3//attached to left side bceause its smaller
+  4//search returns a 3, add as a right child to 3
+  1//go left , smaller than five, go left smaller than 3, one should be on left of 3, 3 is parent
+  2// go left of 5, go left of 3, go right of 1, child to right of 1
+  7// start of 5, 7 goes right of 5
+  only one place any of these values can be placed ever
+
+                                  5
+                                3   7
+                              1  4
+                            2
+
+
+add(1,2,3,4,5)
+height = n-1 O(n) - n has to go up one node at  time and pass through all the nodes
+                  1
+                    2
+                      3
+                        4
+                          5
+
+order stuff is inserted has impact on tree we get
+depends on what has been inserted before
+
+bigO
+  runtime of contains method
+    search is O(depth(node it returns)) //however many levels have to go down
+
+  worst because O(height(tree)) /
+  shape of tree and height is dependent on order of data we inserted
+
+  best case ? height
+
+  "best trees" as dense as possible
+  best case height is O(log(N))
+  worst case search in a best case tree is O(log(N))
+
+  add,contains both O(log(N) for "nice" trees )
+
+            remove
+leaf nodes would be easy to remove - just set parent.left or .right to null
+
+                    5
+                  3   7
+                1    6  8
+                  2
+
+remove internal node with one child: parent.left/.right = child.left/right
+to remove the 3, have the 5 point to the 1
+this is ok, not changing any other relationships
+
+
+remove internal node with two children -hard
+  steal an appropriate value and put it in the spot n's data
+  delete the stolen value from wherever it came from
+
+  values I can steal are called the predecessor or the successor
+    next or previous values if everything in the tree is ordered
+
+    successor(nodes)
+      n = n.right
+        while (n.hasleft)
+          n=n.left
+go right one step then left as far as you can
+
+to remove internal node with two children, find pred or suc, find size of the two subtrees, steal value put node in want to delete
+
+first(){
+go left as far as possible
+}
+
+Map ADT
+  put
+  get
+  remove
+
+TreeMap
+  node
+    k key -- all comparisons only look at they key part not the value part
+    v val
+    Node left, right
+
+
+
+midterm:
+75 points
+a lot of bigO analysis, simple loop, for i = 0 . n;
+what if run selection sort or particular input, or quick sort
+couple of code writing questions
+generics, made a queue of T
+looking at code, understadning what happens when it is run - insertion sort on array already sorted, what does that algo do onthat input, why is that O(N)
+
+big O analysis
+
+seelction sort - j go to end
+
+insertion sort
+
+analysis of merge vs quick sort
+why did we get NlogN
