@@ -12,43 +12,94 @@ public class TimingExperiments2 {
         public static void main(String[] args) throws IOException {
 
             for (int N = 10000; N <= 100000; N += 10000) {
-                // Creating a BST and a TreeSet for each N
                 BinarySearchTree<Integer> BST = new BinarySearchTree<>();
                 TreeSet<Integer> treeSet = new TreeSet<>();
 
-                // Generating random order for insertion
-                List<Integer> randomOrder = generateRandomOrder(N);
-
-                long avgTree = 0;
                 long avgBST = 0;
-
-                long timeTakenTreeSet = 0;
-                long timeTakenBST = 0;
+                long avgTreeSet = 0;
 
                 for (int i = 0; i < 100; i++) {
-                    // Timing for add in TreeSet
-//                    long startTimeTreeSet = System.nanoTime();
-//                    for (int item : randomOrder) {
-//                        treeSet.add(item);
-//                    }
-//                    long endTimeTreeSet = System.nanoTime();
-//                    timeTakenTreeSet += endTimeTreeSet - startTimeTreeSet;
+                    // Generating random order for insertion
+                    List<Integer> randomOrder = generateRandomOrder(N);
 
-                    // Timing for add in BST
                     long startTimeBST = System.nanoTime();
                     for (int item : randomOrder) {
                         BST.add(item);
                     }
                     long endTimeBST = System.nanoTime();
-                    timeTakenBST += endTimeBST - startTimeBST;
+                    avgBST += (endTimeBST - startTimeBST);
+
+
+
+                    long startTimeTreeSet = System.nanoTime();
+                    for (int item : randomOrder) {
+                        treeSet.add(item);
+                    }
+                    long endTimeTreeSet = System.nanoTime();
+                    avgTreeSet += (endTimeTreeSet - startTimeTreeSet);
+
+
                 }
 
-//                avgTree = timeTakenTreeSet / 100;
-//                System.out.println("TreeSet add:\t" + N + "\t" + avgTree);
+                avgBST /= 100;
+                avgTreeSet /= 100;
 
-                avgBST = timeTakenBST / 100;
                 System.out.println("BST add:\t" + N + "\t" + avgBST);
+                System.out.println("TreeSet add:\t" + N + "\t" + avgTreeSet);
             }
+        }
+
+    public static List<Integer> generateRandomOrder(int N) {
+        List<Integer> randomOrder = new ArrayList<>(N);
+        for (int i = 1; i <= N; i++) {
+            randomOrder.add(i);
+        }
+        Collections.shuffle(randomOrder);
+        return randomOrder;
+    }
+
+//            for (int N = 10000; N <= 100000; N += 10000) {
+//                // Creating a BST and a TreeSet for each N
+//                BinarySearchTree<Integer> BST = new BinarySearchTree<>();
+//                TreeSet<Integer> treeSet = new TreeSet<>();
+//
+//
+//
+//                long avgTree = 0;
+//                long avgBST = 0;
+//
+//                long timeTakenTreeSet = 0;
+//                long timeTakenBST = 0;
+//
+//                for (int i = 0; i < 100; i++) {
+//                    // Generating random order for insertion
+//                    List<Integer> randomOrder = generateRandomOrder(N);
+//
+//                    // Timing for add in TreeSet
+////                    long startTimeTreeSet = System.nanoTime();
+////                    for (int item : randomOrder) {
+////                        treeSet.add(item);
+////                    }
+////                    long endTimeTreeSet = System.nanoTime();
+////                    timeTakenTreeSet += endTimeTreeSet - startTimeTreeSet;
+//
+//                    // Timing for add in BST
+//                    long startTimeBST = System.nanoTime();
+//                    for (int item : randomOrder) {
+//                        BST.add(item);
+//                    }
+//                    long endTimeBST = System.nanoTime();
+//                    timeTakenBST += endTimeBST - startTimeBST;
+//
+//                }
+//
+//
+////                avgTree = timeTakenTreeSet / 100;
+////                System.out.println("TreeSet add:\t" + N + "\t" + avgTree);
+//
+//                avgBST = timeTakenBST / 100;
+//                System.out.println("BST add:\t" + N + "\t" + avgBST);
+//            }
 //            for(int N = 10000; N <= 100000; N += 10000){
 //                //creating a bst for each N in the range, going up by 100000
 //                BinarySearchTree<Integer> BST = new BinarySearchTree<>();
@@ -120,18 +171,19 @@ public class TimingExperiments2 {
 
 
 
-    public static List<Integer> generateRandomOrder(int N){
-            List<Integer> randomOrder = new ArrayList<>();
+//    public static List<Integer> generateRandomOrder(int N){
+//            List<Integer> randomOrder = new ArrayList<>(N);
+//
+//            //adding integers from 1 to N in order
+//            for(int i = 1; i <= N; i++){
+//                randomOrder.add(i);
+//            }
+//
+//            //method to put this list into a randomly shuffled order
+//            Collections.shuffle(randomOrder);
+//
+//            return randomOrder;
+//    }
 
-            //adding integers from 1 to N in order
-            for(int i = 1; i <= N; i++){
-                randomOrder.add(i);
-            }
 
-            //method to put this list into a randomly shuffled order
-            Collections.shuffle(randomOrder);
 
-            return randomOrder;
-    }
-
-}

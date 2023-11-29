@@ -33,7 +33,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
     //-------------------------------------UPDATING THE HEIGHT-------------------------------------------------------\\
 
     /**
-     *
+     * driver method to calculate the height of the BST
      */
     public void updateHeight() {
         calculateHeight(root_);
@@ -41,8 +41,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
     /**
      *
-     * @param node
-     * @return
+     * @param node the node at which to begin the heigh calculation, root
+     * @return return an int of the height value
      */
     private int calculateHeight(Node node) {
         if (node == null) {
@@ -93,7 +93,8 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
         //calling the recursive add method which returns the node of where this item should be added
         else {
             root_ = addRecursive(root_, item);
-            updateHeight();
+            //updateHeight(); //THIS IS O(N) , causing problems in my tests bc
+            //recalculating the height of every node, causing O(N^2) in my test
             size_++;
             return true;
         }
@@ -102,13 +103,14 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
     /**
      *
-     * @param index
-     * @param item
-     * @return
+     * @param index a Node and the index it is placed at
+     * @param item The element to be added to the BST
+     * @return the index of the current node after the recursive call
      */
     private Node addRecursive(Node index, T item) {
         //not a node at the current index
         if (index == null) {
+            size_++;
             return new Node(item);
         }
         //item to add is < item at current index
@@ -117,8 +119,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
             index.left_ = addRecursive(index.left_, item);
         } else if (item.compareTo(index.value_) > 0) {
             index.right_ = addRecursive(index.right_, item);
-        } else {
-            return index;
         }
         //new root of subtree, parent of item added
 
@@ -185,9 +185,9 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 
     /**
      *
-     * @param index
-     * @param item
-     * @return
+     * @param index the index of the current node in the recursive call
+     * @param item the item to check for it's presence
+     * @return true if item is present, else false
      */
     private boolean containsRecursive(Node index, T item) {
         if (item == null) {
