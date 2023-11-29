@@ -52,7 +52,9 @@ public class SpellChecker {
    *          - the String to be added to the dictionary
    */
   public void addToDictionary(String word) {
-      dictionary.add(word);
+      if(word != null) {
+        dictionary.add(word);
+      }
   }
 
   /**
@@ -62,7 +64,9 @@ public class SpellChecker {
    *          - the String to be removed from the dictionary
    */
   public void removeFromDictionary(String word) {
-    dictionary.remove(word);
+    if(word!=null) {
+      dictionary.remove(word);
+    }
   }
 
   /**

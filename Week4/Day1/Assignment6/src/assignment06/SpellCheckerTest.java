@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,11 +31,11 @@ class SpellCheckerTest {
     public void testAddSpellCheck(){
 
 
-        run_spell_check(mySC, "testdic.txt");
+        run_spell_check(mySC, "myBook.txt");
 
         mySC.addToDictionary("aiden");
 
-        run_spell_check(mySC,"testdic.txt");
+        run_spell_check(mySC,"myBook.txt");
 
     }
 
@@ -42,7 +43,11 @@ class SpellCheckerTest {
     public void testRemove(){
         mySC.removeFromDictionary("aiden");
 
-        run_spell_check(mySC, "testdic.txt");
+        run_spell_check(mySC, "myBook.txt");
+
+        mySC.addToDictionary("wassup");
+
+        run_spell_check(mySC, "myBook.txt");
     }
 
     @Test
@@ -55,9 +60,17 @@ class SpellCheckerTest {
 
         SpellChecker myList = new  SpellChecker(list);
 
-        run_spell_check(myList, "testdic.txt");
+        run_spell_check(myList, "myBook.txt");
 
     }
 
+//    @Test
+//    void spellCheck() {
+//        List<String> misspelledWords = mySC.spellCheck(new File("myBook.txt"));
+//
+//        mySC.addToDictionary("aiden");
+//        List<String> expectedMisspelledWords = Arrays.asList("aiden");
+//        assertEquals(expectedMisspelledWords, misspelledWords);
+//    }
 
 }
