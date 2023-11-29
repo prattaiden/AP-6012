@@ -110,7 +110,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
     private Node addRecursive(Node index, T item) {
         //not a node at the current index
         if (index == null) {
-            size_++;
             return new Node(item);
         }
         //item to add is < item at current index

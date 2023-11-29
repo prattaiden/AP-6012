@@ -8,7 +8,7 @@ import java.util.List;
 public class TimingExperiments {
         public static void main(String[] args) throws IOException {
 
-            for(int N = 1000; N <= 20000; N *= 2){
+            for(int N = 1000; N <= 40000; N *= 2){
                 //creating a bst for each N in the range, going up by 100000
                 BinarySearchTree<Integer> bstSorted = new BinarySearchTree<>();
                 BinarySearchTree<Integer> bstRandom = new BinarySearchTree<>();
