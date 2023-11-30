@@ -28,6 +28,7 @@ public class Assignment07TimingExperiment {
 
 
             long totalAdd = 0;
+            //set for keeping track fo collisions
             HashSet<Integer> set = new HashSet<>();
             int count = 0;
 

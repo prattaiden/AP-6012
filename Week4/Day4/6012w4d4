@@ -1,0 +1,81 @@
+hash tables graphs
+
+Hash tables (map)
+  store an array of key value pairs
+  compress(hash(k)) -> index in array
+  k1,k2 map to sane index - collision
+
+  chaining, each array slot holds many items
+
+today
+probing
+  if we have a collision
+    we find another index
+      make sure when look for think also find it, put it somewhere we will find later on
+        remove is also tricky
+
+linear probing
+  the slots we try to put the element in slot c(h(k)) + i % length
+
+  walk through array, wrap around until we find a spot
+
+get(k)
+  index = c(h(k))
+    if arr[index].k =/ k
+
+
+
+contains method must search until it finds an unused slot - then sure that the key is not in there
+
+
+REMOVE
+
+  remove(90)
+  put something there that tells search to keep going
+  put a tombstone there not a null
+  tombstone is a free slot for add and get must continue past it
+  also "lazy delete" boolean set to true
+  someway of marking it
+  has to be something to store in array - java a pointer to a special object or a boolean
+
+Probing big O analysis
+  amount of searches depends on the lambda "load factor" which is N/arrayLength
+  with chaining load factor can be greater than 1
+  with probing if array is full have to rehash it
+
+  want to know the expected number of slots to check
+  assume elements are distributed randomly
+
+  p (slot is full ) is lambda
+  probabilty of k slots full in a row = lambda^k
+  expected k = 1/1-lambda
+  if my table has a load factor of lambda, number of steps expected to search on average
+  the closer it gets to one, the more steps it will take
+
+  lambda = .5 "half full" = 1/.5 = 2
+  not realistic
+
+  primary clustering
+    get big chunks of used array
+
+  more accuruate formula
+    1+1/(1-lambda)^2
+      grows fast above lambda = .5
+
+  avoid primary clustering by choosing a different probing sequence
+    instead of looking at element in order until we find spot
+
+  next simplest strategy is quadratic probing
+    look at c(h(k)) + i^2
+
+
+  table length 16
+  c(h(k)) -> 0
+    what indices do we look at with quadratic probing
+    0,1,4,9 16%16 = 0;goes on repeated same indices
+
+    will never touch a whole bunch of indices
+    possible will not find a slot
+
+    array length should be a prime number
+    

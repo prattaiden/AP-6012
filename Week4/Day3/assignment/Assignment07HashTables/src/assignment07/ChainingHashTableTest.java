@@ -60,9 +60,24 @@ class ChainingHashTableTest {
 
         assertTrue(chainingHashTable.add("mediocre"));
         assertTrue(chainingHashTable.contains("mediocre"));
+        chainingHashTable.add("test");
+        assertTrue(chainingHashTable.contains("test"));
+        chainingHashTable.remove("test");
+        assertFalse(chainingHashTable.contains("test"));
 
         assertTrue(chainingHashTable.addAll(allStrings));
         assertTrue(chainingHashTable.containsAll(allStrings));
+
+        assertTrue(chainingHashTable.removeAll(allStrings));
+
+        //still has "mediocre" after calling remove all
+        assertTrue(chainingHashTable.contains("mediocre"));
+
+        assertEquals(1, chainingHashTable.size());
+
+        //testing adding an already existing element
+        assertFalse(chainingHashTable.add("mediocre"));
+
 
     }
 
@@ -76,6 +91,10 @@ class ChainingHashTableTest {
 
         assertTrue(chainingHashTable.addAll(allStrings));
         assertTrue(chainingHashTable.containsAll(allStrings));
+
+        assertFalse(chainingHashTable.isEmpty());
+        chainingHashTable.clear();
+        assertTrue(chainingHashTable.isEmpty());
     }
 
     @Test

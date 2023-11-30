@@ -42,7 +42,7 @@ public class ChainingHashTable implements Set<String>{
         }
 
         int index = functor_.hash(item)%capacity_;
-        if (storageLL_[index] == null) {
+        if (storageLL_[index] == null || storageLL_[index].isEmpty()) {
             storageLL_[index] = new LinkedList<>();
 
         }
@@ -70,12 +70,10 @@ public class ChainingHashTable implements Set<String>{
 
         for(String item : items){
 
-            int index = functor_.hash(item)%capacity_;
-            if (storageLL_[index] == null) {
-                storageLL_[index] = new LinkedList<>();
+            if(!contains(item)) {
+                add(item);
+                itAdded = true;
             }
-            storageLL_[index].push(item);
-            itAdded = true;
         }
         return itAdded;
     }
@@ -111,6 +109,9 @@ public class ChainingHashTable implements Set<String>{
         if(item == null){
             return false;
         }
+        if(isEmpty()){
+            return false;
+        }
 
         int index = functor_.hash(item)%capacity_;
         boolean found = false;
@@ -139,14 +140,17 @@ public class ChainingHashTable implements Set<String>{
         if(items == null){
             return false;
         }
-        boolean itContains = false;
-
+        if(isEmpty()){
+            return false;
+        }
+//        boolean itContains = true;
         for(String item : items){
-            if(contains(item)) {
-                itContains = true;
+            if(!contains(item)) {
+//                itContains = false;
+                return false;
             }
         }
-        return itContains;
+        return true;
     }
 
     /**
@@ -167,15 +171,16 @@ public class ChainingHashTable implements Set<String>{
      */
     @Override
     public boolean remove(String item) {
-        if(item == null){
+        if (item == null) {
             return false;
         }
-        if(!contains(item)){
+        if (!contains(item)) {
             return false;
         }
 
-        int index = functor_.hash(item)%capacity_;
-        storageLL_[index].pop();
+        int index = functor_.hash(item) % capacity_;
+        storageLL_[index].remove(item);
+        size_--;
         return true;
 
     }
