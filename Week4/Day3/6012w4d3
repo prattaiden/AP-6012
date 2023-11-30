@@ -1,0 +1,203 @@
+Hash tables
+heap sort
+
+nested section
+
+  section
+      section
+          section
+stack is good for dealing with things that are nested
+
+enter a section, push current color
+exit a section, pop current color
+
+
+Heap
+  binary tree
+  complete
+  parent < children property ( min heap)
+  build in O(N) time from unordred array
+
+K-smallest problem
+  get k smalelst eelments from an array
+
+step 1: heapify(array) - start at first internal node and call percolate down until whole tree has right ordering for heap O(N)
+
+  one of roots children is for sure the trees second smallest element
+  for(i = 0 .. k)
+    smallest.add(heap.removeMin()); - log N operation K times
+    O(N + K log N)
+      K-> 0 ... N
+      O(N) ... O(NlgN) -can do it in O(N) time
+
+  median finding algorithm
+  QuickSelect - algorithm for computing order statistics
+
+                      unordered array
+    [ Kth smallest < Kth smallet  > kth smallest]
+
+  Quick select "average -y" case
+    want
+    best case pivot is median,
+    worst case first or last element, not splitting array at all
+
+    first call to partition, look at all N elements
+    then 3/4
+
+k - smallest
+quick select (arr, k)
+sort first k elements klgk
+O(N + k lgk)
+a little faster than heap version
+
+k - largest for small k
+  could call removeMin N-k times - not great
+  instead:
+    build a max heap
+      removeMax k times
+        now parent is > children
+
+sort with a heap
+  heapify(arr)
+    while heap is not empty
+      sorted.add(heap.removeMin)
+
+  min small      big
+
+where does min go
+
+remove min , stick it at the end , which is now not used by the heap
+repeat process N times
+array in descending order, reverse array
+
+for(i = 0 ..N)
+  O(logN)[arr[n-i] remove min]
+O(NlogN)
+
+optimized version build a max heap of array
+  while heap is not empty
+    arr(n-i -1) = removeMax
+
+max-heap find array
+
+va
+heap really cool
+
+
+hashtable
+
+array key has to be index and integer
+if K is a small integer
+  an array implements Map(int, V) really well
+
+change key to make it a small integer then make it an array
+
+hash table
+  map implementation, only backing data structure is an array , member variable
+  turns our key into an index in an array
+
+hash function
+  function Object - > integer
+
+in java object defines
+  int hashCode()
+which you should override
+Integer -> index - compression function
+  simplist is to use i % arrayLength
+    if i < 0
+      use absolute value or add arraylength
+
+  add(k,v)
+    index = compress(hash(k))
+    arr[index] = Entry(k,v) - store key in value
+
+    remove - look up , set to null
+
+assume array is length 10
+  add 11 entries - would overwrite something
+    the pigeon hole principle
+    at least 2 entries must have the same index
+    collision - what part of code is responsible for trying to prevent collisions in the hash table?
+
+    prevent collisions
+      use a "good" hash function
+        spread "hashes" across all integers
+
+      consider a string hash function
+        h(s) = s.length - lots of collisions , concentrated in small integers
+        h(s) = {ascii value of characters - gives integer related to contents of string - hash is better bc comparing characters - anograms collide bc same letters
+
+        must be deterministic to find values later
+
+    avoid collisions by choosing good hash functions but cannot eliminate collisions
+      need way to deal with them
+
+    if 2 items hash and compress to the same index, what do we do?
+      pick another index - probing , look for other places to put the item
+      put multiple index at the same index - chaining, stick multiple values at different index
+
+CHAIning
+  our member variable is LinkedList<Entry>[] "store an array of linked list"
+
+add(k,v)
+  index = c(h(k))             O(1)
+  search linkedlist at arr[index]   O(list length)
+    update the entry for k or add an entry for k,v
+
+load factor lambda ƛ
+  # of elements stored / array length , typically 1
+  lambda  is average list length "load factor"
+    assuming lambda is less than 1, list is relatively short
+    assuming small lambda and good hash function, all operations are O(1) *amortized , usually fast , sometimes have to grow array and copy over, choose good growth, show that it happens so rarely operations are still very fast
+      does not depend on how big the hash table is MAGIC
+
+    chaining approach, store array of linked list, loop through list , add remove and get are all almost simialry and differnce it what we do with the lsit
+
+what if lambda is too big?
+  array of length 10
+  add 100 or 1000 elements to it , performance gets bad , list gets long, could get O(N) time
+   --- make a bigger array - rehashing
+    cant just copy list from old array to new array at same index
+      for(element : oldArray){
+        hashtable.insert(element) // recompute compression of h(k)
+          will probably put in a new index
+      }
+    rehash when lambda gets above some threshold
+      lambda gets above 2, rehash
+
+one of the most important and useful data structures,
+languages are built around having a hash table
+
+chaining implementation
+hash table is a collection
+have a collection want to iterate through the elements
+
+hash table iterator
+  [][][][][][][][][][][][][]
+  []    []          []  []
+  []    [o]          []
+        [o]
+
+in a linked list , linked list iterator
+index - data members of iterator are the index and the linked list iterator
+
+what is the run time of this :
+  for(var k,v: hastable){
+    print(v)
+  } --- run time is O(N + arraylength)
+  go through array indexes
+
+great if i know exactly what im looking for
+  great for spell checker if word is misspelled
+    bad at suggesting words i may have meant
+      find things nearby with a binarysearchtree
+        change one letter in the string might be in a completely different part of the hash table, - useless searching nearby, not great for iterating
+
+
+set using a hash table only have a has Map
+  hashmap (k, bool)
+    value is boolean for if it is there or not
+
+in java
+  hashmap
+  hashset

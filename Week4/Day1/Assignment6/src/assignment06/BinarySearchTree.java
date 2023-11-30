@@ -30,45 +30,6 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
         }
     }
 
-    //-------------------------------------UPDATING THE HEIGHT-------------------------------------------------------\\
-
-    /**
-     * driver method to calculate the height of the BST
-     */
-    public void updateHeight() {
-        calculateHeight(root_);
-    }
-
-    /**
-     *
-     * @param node the node at which to begin the heigh calculation, root
-     * @return return an int of the height value
-     */
-    private int calculateHeight(Node node) {
-        if (node == null) {
-            return -1;
-        }
-
-        //calculate the height of the left and right subtrees of the current node
-        int leftHeight = calculateHeight(node.left_);
-        int rightHeight = calculateHeight(node.right_);
-
-        //determine the height of the current node by taking the maximum of the two heights and adding 1
-        int height = Math.max(leftHeight, rightHeight) + 1;
-
-        //update the height variable of the node to the calculated height
-        node.height_ = height;
-
-        return height;
-    }
-
-    /**
-     *
-     * @return the current height of the BST
-     */
-    public int getHeight() {
-        return root_.height_;
-    }
 
     //-----------------------------------IMPLEMENTED METHODS----------------------------------------\\
     /**
@@ -164,6 +125,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
     @Override
     public void clear() {
         root_ = null;
+        size_ = 0;
     }
 
     /**
@@ -222,12 +184,12 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
      */
     @Override
     public boolean containsAll(Collection<? extends T> items) {
-        if(items == null){
-            throw new NullPointerException();
-        }
 
         //check each item
         for (T item : items) {
+            if(item == null){
+                throw new NullPointerException();
+            }
             if (!contains(item)) {
                 return false; //return false if any item is not found in the set
             }
@@ -304,7 +266,7 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
         if (this.contains(item)) {
             root_ = removeRecursive(root_, item);
             // Call updateHeight after removing a node
-            updateHeight();
+            //updateHeight();
             size_--;
             return true;
         }
@@ -440,5 +402,45 @@ public class BinarySearchTree<T extends Comparable<? super T>> implements Sorted
 //            throw new NullPointerException("empty");
 //        }
     }
+    //-------------------------------------UPDATING THE HEIGHT-------------------------------------------------------\\
+
+    /**
+     * driver method to calculate the height of the BST
+     */
+    public void updateHeight() {
+        calculateHeight(root_);
+    }
+
+    /**
+     *
+     * @param node the node at which to begin the heigh calculation, root
+     * @return return an int of the height value
+     */
+    private int calculateHeight(Node node) {
+        if (node == null) {
+            return -1;
+        }
+
+        //calculate the height of the left and right subtrees of the current node
+        int leftHeight = calculateHeight(node.left_);
+        int rightHeight = calculateHeight(node.right_);
+
+        //determine the height of the current node by taking the maximum of the two heights and adding 1
+        int height = Math.max(leftHeight, rightHeight) + 1;
+
+        //update the height variable of the node to the calculated height
+        node.height_ = height;
+
+        return height;
+    }
+
+    /**
+     *
+     * @return the current height of the BST
+     */
+    public int getHeight() {
+        return root_.height_;
+    }
+
 }
 
