@@ -78,4 +78,122 @@ Probing big O analysis
     possible will not find a slot
 
     array length should be a prime number
-    
+    java BigInteger method that is nextProbablePrime(x)
+
+    with a lambda less than .5 anda prime table size quadratic probing is really good
+
+    double hashing
+    probing sequence
+    c(h(k)) + h2(k) + i
+
+--------------------------------------------------------------------------------------------------
+Graphs:
+representing data where relationships are a key
+set of nodes or vertices
+  connected by edges
+  trees are a subset of graphs
+
+
+Terminology
+  directed
+
+  0------->1
+
+
+  undirected
+
+  0<------->1
+
+  weight graph or unweighted graph
+
+  neighbors of a node are the ones connected by an edge
+
+  simple graphs
+    no duplicate edges
+    no self loops
+
+  Paths
+    connected sequence of edges (following arr if directed)
+      put
+  Cycle
+    path which starts /ends at the same node
+
+
+  undirected graphs
+  "connected" if there is a path between every pair of nodes
+
+  directed graph "strongly connected"
+
+  same but follow edges along the arrows
+
+  special graphs
+  Trees
+    no loops (acyclic)
+    find one node is the root, draw as heiarchical structure
+    trees are undirected or root to leaf directed
+
+  Directed Acyclic Graphs DAGs
+  cannot make a loop, nodes with multiple parents
+
+class Graph
+  class Node
+    data
+    set<Node> neighbors;
+    or collections<Node> nodes;
+    HashMap <String,Node>
+
+  sparse Graphs
+    "not too many edges"
+      each node has O(1) neighbors
+
+    #of neighbors is "degree"
+      digraph in degree, out degree
+
+    Dense graph
+      average node egree is O(V)
+        most nodes are connected to most other nodes
+
+    Adjacency matrix
+      2D array of edges
+
+      diagonal is empty if simple graph
+
+    algorithms:
+      path finding
+        given a graph and a start + end node
+          find a path from start to end
+
+      findPath(s,e){
+        frontier = simpleDataStructure(s) - some collection - put starting node in it
+        n = frontier.removeSomeNode[]
+        if n == end;
+          reconstruct the path and return it
+
+        add N's neighbors to the frontiers
+          update extra info
+
+      }
+
+  initialize frontier with starting node, as long as stuff to explore, get node to look at , check if got to end, otherwise what neighbors of N need to be added to frontier
+  //after loop
+    no path
+
+
+  stack, queue, priority queue
+  ____(s,e)
+  //algorithm from above filling in book keeping info
+  when we want to reconstruct
+  s.cameFrom = s;
+  Q frontier = Q(s);
+  while(frontier is not empty){
+     n = frontier.dequeue();
+     if(n == end)
+      follow the came from links until I get to start
+      return path
+    for (neighbors of n)
+      if neighbor.cameFrom is null
+        neighbor.cameFrom = n
+        frontier.enqueue(neighbor)
+    //while is done
+    return no path
+  }

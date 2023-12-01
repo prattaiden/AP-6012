@@ -41,11 +41,16 @@ public class ChainingHashTable implements Set<String>{
             return false;
         }
 
+        //applying the hash function from the provided functor on the String passed in
+        //take the modulo of that hash result, ensures will fall within capacity
+        //save that into the index int
         int index = functor_.hash(item)%capacity_;
+        //if there is not already a LL at the given index, make a new one
         if (storageLL_[index] == null || storageLL_[index].isEmpty()) {
             storageLL_[index] = new LinkedList<>();
 
         }
+        //adding item and increasing the size
         storageLL_[index].push(item);
         size_++;
         return true;
@@ -68,8 +73,9 @@ public class ChainingHashTable implements Set<String>{
         }
         boolean itAdded = false;
 
+        //looping through the collection
+        //if the item is not in the hashtable, add it, update to true
         for(String item : items){
-
             if(!contains(item)) {
                 add(item);
                 itAdded = true;
@@ -84,14 +90,14 @@ public class ChainingHashTable implements Set<String>{
      */
     @Override
     public void clear() {
+        //setting the size to 0 and then looping through all the linked lists in the array
+        //clearing the linked lists
         size_ = 0;
         for (LinkedList<String> LL : storageLL_){
             if(LL != null) {
                 LL.clear();
             }
         }
-
-        //clear the storage?
 
     }
 
@@ -112,9 +118,13 @@ public class ChainingHashTable implements Set<String>{
         if(isEmpty()){
             return false;
         }
-
+        //applying the hash function from the provided functor on the String passed in
+        //take the modulo of that hash result, ensures will fall within capacity
+        //save that into the index int
         int index = functor_.hash(item)%capacity_;
         boolean found = false;
+
+        //if this index exists, loop through and return true if item is found
         if (storageLL_[index] != null) {
             for(String search : storageLL_[index]){
                 if(search == item){
@@ -143,10 +153,12 @@ public class ChainingHashTable implements Set<String>{
         if(isEmpty()){
             return false;
         }
-//        boolean itContains = true;
+
+        //loop through items in collection,
+        // if any of the items are not found, return false
         for(String item : items){
             if(!contains(item)) {
-//                itContains = false;
+
                 return false;
             }
         }
@@ -178,7 +190,11 @@ public class ChainingHashTable implements Set<String>{
             return false;
         }
 
+        //applying the hash function from the provided functor on the String passed in
+        //take the modulo of that hash result, ensures will fall within capacity
+        //save that into the index int
         int index = functor_.hash(item) % capacity_;
+        //remove method from LinkedList class
         storageLL_[index].remove(item);
         size_--;
         return true;
@@ -202,6 +218,8 @@ public class ChainingHashTable implements Set<String>{
         }
         boolean itRemoved = false;
 
+        //loop through items in collection,
+        //if item exists, remove it
         for(String item : items){
             if(contains(item)) {
                 remove(item);

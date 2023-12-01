@@ -5,6 +5,7 @@ package assignment07;
 public class GoodHashFunctor implements HashFunctor{
 
     //djb2 by Dan Bernstein
+    //multiplies the hash by 33 and adds the ascii value of the character
     @Override
     public int hash(String item) {
         int hash = 5381;

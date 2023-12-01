@@ -2,6 +2,8 @@ package assignment07;
 
 public class MediocreHashFunctor implements HashFunctor{
 
+
+    //takes the sum of each character in the strings and multiplies it's ascii value
     @Override
     public int hash(String item) {
         int c = 1;
