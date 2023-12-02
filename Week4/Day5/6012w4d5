@@ -1,0 +1,131 @@
+Graph serach
+
+BFS(s, t) - breadth first search
+  frontier = Q(s)
+//search radially out from starting point, 1, 2, 3 edges away
+s.cameFrom = s
+while !frontier.empty
+  n = frontier.dequeue
+  if(n == target)
+    reconstructpath + return it
+  for each neighbor of n , -total # of iterations in all while loop iterations total O(number of edges)
+    if the neighbor hasn't been seen(camefrom == null - only added one time
+
+Map(Node,Node) cameFrom
+  cameFrom.put(src,src) // storing data in map instead of node object, data associated with each Node
+
+queue datastructure run time
+//worst case, have to look at everything //average depends on connectivity of the graph
+runtime is O(E+V)
+
+sparse graph, big O in terms of v
+
+dense graph
+  O(V^2)
+
+Frontier is stack
+  easy to write recursively which stores the frontier implicitly
+
+  DFS(s,t)v -- depth first search - goes in a direction as far as it can, if gets to target great, if not , backs up keeps giong
+    s.visited = true
+    for each neighbor of s
+      if (!s.visted)
+        //if haven't visited, recursive call of DFS
+          dfs(neighbor, target)
+            return the path from the source to the destination
+            return s+ returned path
+
+      return null
+
+paths returned by DFS are probably not the shortest, but guarantee if a path exists , DFS will return one of them
+seems worse than BFS, why use it?
+  a certain type of maze would be suited to DFS and maybe not BFS
+  DFS uses less memory than BFS on average
+    max frontier site
+      max bfs memory usage
+      bfs q size size of the biggest ring around src
+    DFS memory used by call stack
+    Proportional to longest path we look at
+
+weighted graphs
+                  1
+        1    a     b    1
+    s                            t
+                    5
+
+  Q(s) dequeue s, enque (a,T)// s neighbors
+
+  (a,t) dequeue a, enqueue (b)
+
+  (t,b) dequeue t - done - path is [s,t] - shortest path - smallest number of edges to traverse from S - T
+  want lowest cost path not shortest path
+
+  [s,a,b,t] cost 3< 5
+
+  want ot explore nodes in order of increasing lowest cost path from s
+
+  add a,t to frontier
+    explore a, add b to frontier
+  use a priority queue to get the shortest cost distance
+
+  frontier is a priority queue which is keyed on "path cost from s"
+
+  Dijkstra's algorithm
+  frontier is PQ keyed on fscore
+    estimated distance from s to node
+      comparator is comparing properties to do the ordering
+  frontier.add(s)
+  s.cameFrom = s
+  s.fscore = 0 //distance from s to s is zero
+  while frontier is not empty
+    n = frontier.removeMin()
+    if(n == target  ) done
+    for neighbors of n
+      if neighbor came from == null
+        //never seen it before
+        add it to the frontier
+        neighbor.camefrom = n
+        neighbor.fscore = n.fscore + edgeweight  //how far it is to get to n + the edgeweight which is the distance to n + the rest of the way to the neighbor
+        frontier.add(neighbor)
+    else if(neighbor.fscore > n.fscore + edgeweight //slower to go however else i knew to get there than to go through me , update to go through me instead of other route)
+      neighbor.fscore = n.fscore + edgweight
+      neighbor.cameFrom = n //this is how we got there
+      frontier.updateweight(neighbor)
+
+
+    implement update weight (element )  O(N) linear search
+      hashMap(element , index)
+      index = getIndex(element)
+      percolateUp (index) O(log N)
+
+    keep the hashmap up to date bt updating it in my swap method now becomes O(1) hash table look up
+    worst case logN percolate up
+
+run time is (|v| + |E|log|v|)
+  while loop cost +
+  O(v+ElogV)
+    //log v because replaced
+    //now the algorithm finds the lowest cost path in a weighted graphs
+
+    //same algo as others, just replaced frontier with priority queue
+    keep track of estimated cost of nodes, when updating, make sure heap is in the right order
+
+heuristic function
+  h(n) - estimate of the distance from n to t
+driving direction
+  h(n) = crow flies distance from n - t
+  h(n) must be an under estimate
+
+  frontier is PQ
+   keyed on node.fscore + h(node) - estimated rest of the way
+    known distance from the start
+
+  A* optimal
+  //looks at all nodes which must be examined to guarantee the lowest cost
+  same as Dijkstra algo with bonus
+
+use breadth first search not dijkstra algo in pacman
+ because there is no weight
+ dont need priority queue stuff
+
+ BFS works fine
