@@ -18,7 +18,7 @@ public class NodeGraph {
             visited_ = false;
         }
     }
-    //--------------------------------------------------------------------------------------\\
+    //------------------------------------------------------------------------------------\\
     Node start_;
     Node goal_;
     private Queue<Node> frontier_;
@@ -140,7 +140,7 @@ public class NodeGraph {
              if (current == goal_) {
                  return true;
              }
-             //loop through the neighors that this current Node has
+             //loop through the neighbors that this current Node has
              for(Node neighbor : current.neighbors_) {
                  //marking the visited neighbor
                  if (!neighbor.visited_) {

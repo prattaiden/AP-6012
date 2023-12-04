@@ -46,7 +46,7 @@ public class PathFinder {
             // Read the dimensions
             String dimensionsLine = scanner.nextLine();
             String[] dimensions = dimensionsLine.split(" ");
-            //first two ints in the file determine the dimensions of hte maze
+            //first two ints in the file determine the dimensions of the maze
             int height = Integer.parseInt(dimensions[0]);
             int width = Integer.parseInt(dimensions[1]);
 

@@ -1,0 +1,156 @@
+Binary Space Partitioning Trees
+
+ADT we saw:
+  List
+  Stack, Queue - "index based" , access is restricted to the ends
+  Priority Queue
+  Set, Map - "key based" , associate array - array but index is some arbitrary key instead of arbitrary index
+
+
+Algorithms we saw:
+  Sorting
+  Searching
+  Graph Search
+
+Data Structures we saw: , helpful for implementing adt above
+  Linked List ,  -list and friends
+  Binary Search Tree , Hash Table  - set/map
+
+Analysis
+  How well did we do
+
+
+Today, solving a problem, apply data structures we learned about to new problem
+
+Computational Geometry
+  algorithms and data structures for geometric Data - Line Segments
+
+  2D stuff
+    point(x,y)
+      what's the natural ordering for points ?
+      distance to 0,0
+      x or y
+      x then y
+      no single ordering i want to work with
+
+
+Rendering
+  given a scene description
+    list of objects in the scene with position and orientation
+  viewer information
+    position
+    gaze direction
+    field of view
+
+  want to produce an image
+  Assume we can draw "entire" objects to our screen
+
+  what order to draw
+    draw farthest object first
+    "painters algorithm"
+      draw objects from fat to near from the viewer perspective
+
+  sorting problem
+    comparator is closer vs farther to the viewer
+    cannot always come up with an order to the objects that will have one object farther than another
+
+  in general we may need to split our object into pieces - comparator is not always well defined sorting is (NlogN)
+  dont want to do this each frame
+  as move through scene, order draw object changes
+  dont want to have to sort each frame, each new view point
+
+  2D scenes where the segments are walls so we want to draw the walls in far to near order so the room is shaped properly
+  we can move around and rotate to look at differnt parts of the scene
+  we can move and rotate
+
+  hash table is not helpful because there is no ordering
+  linked list or array 1D data structure with 2D data
+  PQueue similar problem to above
+
+  Binary Search Tree
+    "comparision for line segments"?
+    specify relationship B if it is on left side or right side of A ,
+
+
+compare all segments against s
+
+      s
+e       \      t
+      r  \
+
+compare e with s
+    draw stuff on opposite side
+    draw s
+    draw stuff on same side
+    VERY similar to in order traversal
+    order visit two subsets depends which side the camera is on
+
+Binary space partition Tree
+  each node stores a segment - storing one of the pieces of data in the node
+  left descendents are all on one side of node.segment
+  right descendents are on the other
+
+
+painters algorithm
+  in order BSPT traversal
+    draw far subtree, segment at the node, near subtree, recursively
+    while traversing, look at which side should come at each node
+  traversal run time O(N) - visist every node in the tree, no extra overhead
+
+building a bsp tree
+  insert(nodes, segment)
+    if(segment "left of" node.segment)
+      insert(node.left,segment)
+    else if ("right of")
+      insert(node.right.segment)
+    else //crosses the line
+      split seg
+        insert half left
+        insert half right
+  weird comparator because it is not simple < or >
+
+insert "traversal" is O(height)
+  "unbalanced" tree , could be anywhere from log N - N
+assume O(1) splits
+shape of tree dependent on insertion order
+
+top down construction
+  BSPT constructor take an array of all the segments we want to add up front
+  BSPT(segment[])
+    root = makeNode(segment)
+    mkaeNode(segment[])
+      s = bestSegment(segs) //no principled way to choose the best segment - RANDOM
+      node.s = s;
+        partition the segments into left of s and right of s
+      recursively build the subtrees
+      node.left = makeNode(left segments)
+      node.right = makeNode(right segments)
+
+
+DOOM
+  .bsp mapfiles
+  build once, shipped to customers
+
+can get O(logN) height
+
+balanced tree helps with optimization
+
+collisions detection
+  prevent player from walking through the walls
+    trying to find segment intersection
+
+if my query is on one side of a segment , it can't collide with stuff on the other
+
+//completely different algo than painters
+bool collision (Node , query)
+  if query "left of" Node.segment
+    return collision(n.left, query) //checking for collisions on the left
+  //same for right
+
+  else crosses Node.s
+    check for intersection with the node.s, not guaranteed to collide
+    collision(node.left, q)
+    collision(node.right,q)//could be anywhere
+
+if always cross but never intersect , O(N) always check all segments,
+if can call one side, usuaully O(height) O(logN)
