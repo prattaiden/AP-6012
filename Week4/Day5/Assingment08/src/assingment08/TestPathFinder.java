@@ -14,10 +14,13 @@ public class TestPathFinder {
      * You are still required to make JUnit tests...just lookin' at text files ain't gonna fly. 
      */
     PathFinder.solveMaze("/Users/aidenpratt/Documents/AP-6012/Week4/Day5/Assingment08/mazes/unsolvable.txt",
-            "OUTPUT.txt");
+            "OUTPUT1.txt");
 
     PathFinder.solveMaze("/Users/aidenpratt/Documents/AP-6012/Week4/Day5/Assingment08/mazes/tinyMaze.txt",
             "OUTPUT2.txt");
+
+    PathFinder.solveMaze("/Users/aidenpratt/Documents/AP-6012/Week4/Day5/Assingment08/mazes/bigMaze.txt",
+            "OUTPUT3.txt");
   }
 }
 

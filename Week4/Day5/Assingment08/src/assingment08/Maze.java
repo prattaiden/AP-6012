@@ -24,7 +24,7 @@ public class Maze {
     }
 
     /**
-     * reads in the file with the provided scanner to constrcut the 2darray Maze object
+     * reads in the file with the provided scanner to construct the 2Darray Maze object
      * @param height height
      * @param width width
      * @param scanner scanner

@@ -21,7 +21,7 @@ public class NodeGraph {
     //------------------------------------------------------------------------------------\\
     Node start_;
     Node goal_;
-    private Queue<Node> frontier_;
+    public Queue<Node> frontier_;
     Node[][] nodes_;
     int width_;
     int height_;
@@ -45,8 +45,7 @@ public class NodeGraph {
         nodes_ = new Node[height][width];
         //converting the characters to nodes
         convertToNodes(maze, start, goal);
-        //connecting the node neighbors
-        connectNodeNeighbors(nodes_);
+
     }
 
     /**
@@ -120,36 +119,36 @@ public class NodeGraph {
         }
     }
 
-    /**
-     * Breadth first search algorithm
-     * finds the path from the start to the goal with the given NodeGraph
-     * @return
-     */
-    public boolean findPathBFS(){
-
-        //marks start as true
-        start_.visited_ = true;
-        //frontier queue
-        frontier_ = new LinkedList<>();
-        frontier_.add(start_);
-
-        //until the frontier queue is empty
-        while (!frontier_.isEmpty()){
-            //returns and removes the Node at the top of the queue
-             Node current = frontier_.poll();
-             if (current == goal_) {
-                 return true;
-             }
-             //loop through the neighbors that this current Node has
-             for(Node neighbor : current.neighbors_) {
-                 //marking the visited neighbor
-                 if (!neighbor.visited_) {
-                     neighbor.visited_ = true;
-                     neighbor.cameFrom_ = current;
-                     frontier_.add(neighbor);
-                 }
-             }
-        }
-        return false;
-    }
+//    /**
+//     * Breadth first search algorithm
+//     * finds the path from the start to the goal with the given NodeGraph
+//     * @return
+//     */
+//    public boolean findPathBFS(){
+//
+//        //marks start as true
+//        start_.visited_ = true;
+//        //frontier queue
+//        frontier_ = new LinkedList<>();
+//        frontier_.add(start_);
+//
+//        //until the frontier queue is empty
+//        while (!frontier_.isEmpty()){
+//            //returns and removes the Node at the top of the queue
+//             Node current = frontier_.poll();
+//             if (current == goal_) {
+//                 return true;
+//             }
+//             //loop through the neighbors that this current Node has
+//             for(Node neighbor : current.neighbors_) {
+//                 //marking the visited neighbor
+//                 if (!neighbor.visited_) {
+//                     neighbor.visited_ = true;
+//                     neighbor.cameFrom_ = current;
+//                     frontier_.add(neighbor);
+//                 }
+//             }
+//        }
+//        return false;
+//    }
 }

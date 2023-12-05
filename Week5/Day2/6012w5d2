@@ -1,0 +1,129 @@
+topo sort
+visitor implementation
+  assignemnt
+  segment class is a record class
+    automatically writes getters and things
+  signature for traversal method
+    void traverseFartoNear(Point viewpoint , SegmentCallback callback)
+      //visit function that takes a segment and does whatever needs to be done for that segment
+      algo should call visitor method on each segment as they are visited for each traversal
+
+      callback.callback(segment) in the implementation somewhere
+
+    in the BEST arrayList<T> toArrayList - does in order traversal , sticks in array list and gives it back
+    O(N) memory usage
+    Linked List
+    iterator O(1) memory
+
+    BSP tree implementation is easier but the user code callback vs for each loop
+
+
+Graph + PQueue
+  DAG directed acyclic graphs
+  come up with order
+  could be multiple orders
+  permit,blueprints,concrete,electrical,drywall,paint
+  tell if something now can be done or not
+
+  terminology recap - # of edges coming in is the in-degree - nodes its dependent for
+  Nodes with in-degree 0 are ready to go
+
+  compile indegrees
+    loop over edges
+    count # of edges ending at each nodes
+
+    Q- ready nodes
+    enqueue (nodes with in degree O)
+    while !Q.isempty
+      n = dequeue
+      do(n)
+      for each "out edge " of n, o
+      o.indegree --
+       if(o.indegree ==0){
+       engqueue o
+       }
+       //keeping track of the indegree of the nodes, using a queue to store them
+       //TOPOLOGICAL SORT
+       //takes a dag produces the ordering of nodes so all dependencies are satisfied
+      similar to breadth first search
+
+    could also implement this with a PQ keyed on indegree
+
+Data compression
+  String compression
+  acgtacatgtcacatgacta
+  char is size 1 byte
+  8 bits per char
+  really only need 2 bits/char
+  a 00
+  c 01
+  g 10
+  t 11
+
+want a variable length encoding
+  common characters have short encodings and rare ones can be longer
+
+want to design a prefix
+
+Trie data structure
+tree, where paths from roots to leaves represent data
+
+store characters of leafs of the trie, path gives the encoding
+
+if one node is a prefix of another
+  it must be an ancestor
+  all characters are leaf nodes , so no character can prefix others
+
+
+        ()
+    0/     \1
+    e        ()
+          0/    \1
+          a       b
+
+common character , path from root should be short and depth should be small
+
+incrementally build this
+start by building leaf nodes for each character in our data
+Data
+char int frequency
+helloworld
+
+dehlorw
+1113211
+
+
+                (d1)  (e1)  (h1)  (l3)  (o2)  (r1)  (w1)
+
+
+want the min frequency, break ties with ascii value
+grab two smallest nodes, merge them
+  make an internal node with the sum of the weights
+
+          2   (h1)  (l3)  (o2)  (r1)  (w1)
+     (d1)   (e1)
+
+          2
+    (h1)    (r1)
+
+          now have 3 frequency two nodes
+          break ties with ascii value of the left most child
+
+now one fewer node in set of tree
+
+Build tree
+  PQueue of nodes to merge - keyed on frequency then left most ascii value
+  make leaf ndoes for each char
+  and insert them into PQ
+
+  while PQ size > 1
+    left = extractMin
+    right = extract min
+    pq.add(newNode (left.weight, right.weight)left, right)
+    return PQ.extractMin()//onlything left
+
+    build frequency Table
+    build Trie
+    construct encoding for each char using trie
+
+    send/stores frequency table + encoded rep

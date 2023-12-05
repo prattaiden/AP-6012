@@ -1,6 +1,8 @@
 package assingment08;
 
 import java.io.*;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 public class PathFinder {
@@ -20,13 +22,18 @@ public class PathFinder {
      * @param outputFile file with a solved maze if possible
      */
     public static void solveMaze(String inputFile, String outputFile) {
+
         maze_ = readInFile(inputFile);
         graph_ = new NodeGraph(maze_, 'S', 'G');
-        boolean pathFound = graph_.findPathBFS();
-        if (pathFound) {
+        //connecting the nodes in the graph to it's neighbors
+        graph_.connectNodeNeighbors(graph_.nodes_);
+
+        boolean foundPath = pathFinderBFS(graph_.frontier_, graph_.start_, graph_.goal_);
+
+        if (foundPath) {
             graph_.setPath();
             writeOutFile(outputFile);
-        } else if (!pathFound) {
+        } else if (!foundPath) {
             writeOriginalFile(outputFile);
         }
     }
@@ -39,6 +46,7 @@ public class PathFinder {
      */
     public static Maze readInFile(String inputFile) {
         Maze maze;
+        //String directory = "/Users/aidenpratt/Documents/AP-6012/Week4/Day5/Assingment08/testmazes";
         try {
             File file = new File(inputFile);
             Scanner scanner = new Scanner(file);
@@ -115,6 +123,44 @@ public class PathFinder {
             throw new RuntimeException(e);
         }
     }
+
+    /**
+     * Breadth first search algorithm
+     * finds the path from the start to the goal with the given NodeGraph
+     * @return true if path is found, else false
+     */
+    public static boolean pathFinderBFS(Queue<NodeGraph.Node> frontier, NodeGraph.Node start, NodeGraph.Node goal){
+
+        //confirm there is a start
+        if(start != null) {
+            //marks start as true
+            start.visited_ = true;
+            //frontier queue
+            frontier = new LinkedList<>();
+            frontier.add(start);
+
+            //until the frontier queue is empty
+            while (!frontier.isEmpty()) {
+                //returns and removes the Node at the top of the queue
+                NodeGraph.Node current = frontier.poll();
+                if (current == goal) {
+                    return true;
+                }
+                //loop through the neighbors that this current Node has
+                for (NodeGraph.Node neighbor : current.neighbors_) {
+                    //marking the visited neighbor
+                    if (!neighbor.visited_) {
+                        neighbor.visited_ = true;
+                        neighbor.cameFrom_ = current;
+                        frontier.add(neighbor);
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+
 }
 
 

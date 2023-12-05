@@ -100,7 +100,7 @@ painters algorithm
 building a bsp tree
   insert(nodes, segment)
     if(segment "left of" node.segment)
-      insert(node.left,segment)
+      insert(node.left.segment)
     else if ("right of")
       insert(node.right.segment)
     else //crosses the line
