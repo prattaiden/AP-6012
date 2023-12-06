@@ -1,22 +1,21 @@
 package assignment09;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BSPTree{
 
     //-------------------------------------------NODE CLASS--------------------------------------------------\\
-    class Node {
+    private static class Node {
         Segment segment_;
         Node left_;
         Node right_;
-        public int height_ = -1;
 
         Node(Segment value) {
             segment_ = value;
             left_ = null;
             right_ = null;
         }
-
     }
     //---------------------------------------------------------------------------------------------------------\\
 
@@ -30,72 +29,108 @@ public class BSPTree{
 
     //constructor
     public BSPTree(ArrayList<Segment> segments){
-        if(segments != null && segments.isEmpty()){
-            root_ = makeNode(segments);
+        if(segments != null && !segments.isEmpty()){
+            root_ = buildBSPTree(segments);
+//            for(Segment segment : segments){
+//                insert(segment);
+//            }
         }
     }
 
+/**
+ //     *constructs the BSP tree recursively with the list of provided segments
+ //     * @param segments an arraylist of segments
+ //     * @return a node of the BSPTree
+ //     */
+    private Node buildBSPTree(ArrayList<Segment> segments){
 
+        if(segments.isEmpty()) {
+            return null;
+        }
 
-    public Node getRoot(){
-        return root_;
-    }
-    private Node makeNode(ArrayList<Segment> segments){
-
-        //TODO FILL IN
-        Segment randomSegment = segments.get((int) (Math.random() * segments.size()));
+        int index = (int) (Math.random() * segments.size());
+        //selecting a random segment from the list of segments provided
+        Segment randomSegment = segments.get(index);
+        //new node instance from the random segment
         Node node = new Node(randomSegment);
-
-        //setting the random segment to the node's segment
-        node.segment_ = randomSegment;
+        segments.remove(index);
 
         //partition the segments into left and right
         ArrayList<Segment> leftSegments = new ArrayList<>();
         ArrayList<Segment> rightSegments = new ArrayList<>();
 
-        for(Segment loopSegment : segments){
+        for(Segment loopSegment : segments) {
             int side = node.segment_.whichSide(loopSegment);
-            if(side < 0 ){
+            if (side < 0) {
                 leftSegments.add(loopSegment);
-            }
-            else if (side > 0){
+            } else if (side > 0) {
                 rightSegments.add(loopSegment);
+            } else { //segment intersect the chosen segment
+                Segment[] split = node.segment_.split(loopSegment);
+                leftSegments.add(split[0]);
+                rightSegments.add(split[1]);
             }
         }
-        node.left_ = makeNode(leftSegments);
-        node.right_ = makeNode(rightSegments);
+        node.left_ = buildBSPTree(leftSegments);
+        node.right_ = buildBSPTree(rightSegments);
         return node;
     }
 
+
     /**
      * add a segment to an existing tree
-     * @param segment
+     * @param segment a segment that needs to be added to the BSPTree
      */
     public void insert(Segment segment){
-
-        root_ = insertNodeRecursive(root_, segment);
+        if(root_ == null){
+            root_ = new Node(segment);
+        }else {
+            insertNodeRecursive(root_, segment);
+        }
     }
 
-    private Node insertNodeRecursive(Node node, Segment segment){
-        if(node == null){
-            return new Node(segment);
+    /**
+     * traverses down the tree based on relationship between segments
+     * splits lines / planes represented by each node
+     * @param node starts at the root
+     * @param segment the segment to be added to the tree
+     * @return
+     */
+    private void insertNodeRecursive(Node node, Segment segment) {
+        if (node == null) {
+            node = new Node(segment);
         }
 
         int whichSide = segment.whichSide(node.segment_);
 
-        if(whichSide < 0) { //new segment is on the left
-            node.left_ = insertNodeRecursive(node.left_, segment);
-        } else if (whichSide > 0) { //new segment is on the right
-            node.right_ = insertNodeRecursive(node.right_, segment);
+        if (whichSide > 0) { //new segment is on the left
+            if (node.left_ == null) {
+                node.left_ = new Node(segment);
+            }else {
+                insertNodeRecursive(node.left_, segment);
+            }
         }
-        else{//crosses the line
-            Segment[] splitSegmentArray = segment.split(node.segment_);
+        if (whichSide < 0) { //new segment is on the right
+            if (node.right_ == null) {
+                node.right_ = new Node(segment);
+            } else {
+                insertNodeRecursive(node.right_, segment);
+            }
+        } else {//crosses the line
+            Segment[] splitSegmentArray = segment.split(segment);
+            if (node.left_ == null) {
+                node.left_ = new Node(splitSegmentArray[0]);
+            } else {
+                insertNodeRecursive(node.left_, splitSegmentArray[0]);
+            }
+            //put the right half on the right side (or send it through the method again)
+            if (node.right_ == null) {
+                node.right_ = new Node(splitSegmentArray[1]);
+            } else {
+                insertNodeRecursive(node.right_, splitSegmentArray[1]);
+            }
+        }
 
-            //insert segments that were split
-            node.left_ = insertNodeRecursive(node.left_, splitSegmentArray[1]);
-            node.right_ = insertNodeRecursive(node.right_, splitSegmentArray[0]);
-        }
-        return node;
     }
 
 
@@ -103,71 +138,98 @@ public class BSPTree{
      * traverse the segments in "far to near" order relative to the point (x,y)
      * painters algorithm
      *
-     * @param x
-     * @param y
-     * @param callback
+     * @param x coordinate of a point
+     * @param y coordinate of a point
+     * @param callback callback function to handle each segment encountered in the traversal
      */
-    void traverseFarToNear(double x, double y, SegmentCallback callback){
+    public void traverseFarToNear(double x, double y, SegmentCallback callback){
         traverseRecursive(root_, x, y, callback);
-
     }
 
-    private void  traverseRecursive(Node node, double x, double y, SegmentCallback callback){
-        if(node == null){
+    /**
+     * initiate the traverse process from the root of the tree
+     * recursively navigates down the tree based on the spatial relationship between segments
+     * and the x,y
+     * determines if the point is on the left or right side of the splitting line
+     * @param node starts at root
+     * @param x coordinate
+     * @param y coordinate
+     * @param callback callback function to handle each segment encountered in the traversal
+     * //@param orderedSegments maintains a list of the segments in an order
+     * @return
+     */
+    private void traverseRecursive(Node node, double x, double y, SegmentCallback callback){
+        if(node == null) {
             return;
         }
 
-        int Side = node.segment_.whichSidePoint(x, y);
+        int side = node.segment_.whichSidePoint(x, y);
+        //the + side is the front of the segment, the - side is behind it
 
-        //similar to insertion sort
-        if(Side < 0){
-            traverseRecursive(node.right_,x,y,callback);
+        //navigate to the right side
+        //
+        if (side < 0) {
+            //right side
+            traverseRecursive(node.right_, x, y, callback);
             callback.callback(node.segment_);
-            traverseRecursive(node.left_,x,y,callback);
-        } else{
-            traverseRecursive(node.left_,x,y,callback);
+            traverseRecursive(node.left_, x, y, callback);
+        } else {
+            //left side
+            traverseRecursive(node.left_, x, y, callback);
             callback.callback(node.segment_);
-            traverseRecursive(node.right_,x,y,callback);
+            traverseRecursive(node.right_, x, y, callback);
         }
     }
 
     /**
-     *
-     * @param query
+     * @param query the segment in which to check for colissions
      * @return any segment in the tree which intersects with query
      */
-    Segment collision (Segment query){
+    public Segment collision (Segment query){
         return collisionRecursive(root_, query);
 
     }
 
+    /**
+     * if an intersection is fund, returns the segment stored in that node
+     * which is considered a collision
+     * @param node starts at the root
+     * @param query the segment checking for collision
+     * @return
+     */
     private Segment collisionRecursive(Node node, Segment query){
+        //reached end of branch
         if(node == null){
             return null;
         }
 
+        //find which side the query is on from the node
+        int side = query.whichSide(node.segment_);
         //if it intersects
-        if(node.segment_.intersects(query)){
-            return node.segment_;
-        }
 
-        if(node.segment_.whichSide(query) > 0) {
-            Segment left = collisionRecursive(node.left_, query);
-            if (left != null) {
-                return left;
-            }
-
+        //if the query is on the right side , recurse to the right subtree
+        if(side < 0){
             return collisionRecursive(node.right_,query);
-
         }
-        //else will return the searching in the right subtree
-        else{
-            Segment right = collisionRecursive(node.right_, query);
-            if(right != null){
-                return right;
-            }
-
+        //else if it is on the left, recurse to the left subtree
+        else if (side > 0){
             return collisionRecursive(node.left_,query);
+        }
+        //else the query segment could intersect the node segment
+        //returns node segment as a collision
+        else {
+            if (query.intersects(node.segment_)) {
+                return node.segment_;
+            }
+            //if there is no intersection, explore both subtrees again
+            else{
+                Segment left = collisionRecursive(node.right_, query);
+                if(left != null){
+                    return left;
+                }else{
+                    return collisionRecursive(node.left_, query);
+                }
+            }
         }
     }
 }
