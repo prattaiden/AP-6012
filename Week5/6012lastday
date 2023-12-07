@@ -1,1 +1,17 @@
 6012 last
+
+recap:
+recognize ADT to do operation we need
+
+main adt
+  lists
+    stacks queues
+    priority queue
+    associateve ADT set, map
+
+data strcutes
+  arrayList
+  linkedlist
+  bst
+  hash table
+  heap

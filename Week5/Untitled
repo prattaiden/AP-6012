@@ -1,0 +1,16 @@
+Dynamic Programing
+
+solve any problem recursively
+but naive approach repeatedly solves the same sub problem
+
+make sure we only make each recursive call once
+
+Assembly line
+  n stages
+
+
+  how fast can i build a car
+  find a path through the dag
+
+
+"table based" vs memoization

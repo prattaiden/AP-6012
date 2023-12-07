@@ -49,8 +49,8 @@ public class BSPTree{
         //selecting a random segment from the list of segments provided
         Segment randomSegment = segments.get(index);
         //new node instance from the random segment
-        Node node = new Node(randomSegment);
-        segments.remove(index);
+        Node node = new Node(segments.remove(index));
+
 
         //partition the segments into left and right
         ArrayList<Segment> leftSegments = new ArrayList<>();
