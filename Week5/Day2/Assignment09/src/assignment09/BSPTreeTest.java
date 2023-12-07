@@ -30,7 +30,7 @@ class BSPTreeTest {
     }
 
     @Test
-    void testLines(){
+    void testCollision(){
         ArrayList<Segment> segments = new ArrayList<>();
         segments.add(new Segment(5,2, 10, 2));
         segments.add(new Segment(5,5, 10, 5));
@@ -90,6 +90,63 @@ class BSPTreeTest {
         bottomUp.add(new Segment(5,7,10,7));
 
         assertEquals(belowSegment.callbackList, bottomUp);
+
+    }
+
+    @Test
+    void testEmpty(){
+        BSPTree empty = new BSPTree();
+        assertNotNull(empty);
+    }
+
+    @Test
+    void testEmptyCollision(){
+        BSPTree empty = new BSPTree();
+        assertNotNull(empty);
+        assertNull(empty.collision(new Segment(5, 5, 10, 10)));
+    }
+
+    @Test
+    void duplicateSeg(){
+        ArrayList<Segment> duplicates = new ArrayList<>();
+        duplicates.add(new Segment(5, 10, 10, 12));
+        duplicates.add(new Segment(5, 10, 10, 12));
+
+        BSPTree testTree = new BSPTree(duplicates);
+    }
+
+    @Test
+    void testMoreCollisions(){
+        ArrayList<Segment> segment = new ArrayList<>();
+        segment.add(new Segment(5, 10, 10, 10));
+        Segment hello = new Segment(2, 10, 5, 10);
+        BSPTree tree = new BSPTree(segment);
+        tree.insert(hello);
+        assertNull(tree.collision(hello));
+    }
+
+    @Test
+    void testInsertMore(){
+        BSPTree insertTree = new BSPTree();
+        assertNotNull(insertTree);
+
+        //two horizontal lines
+        Segment one = new Segment(1, 5, 10, 5);
+        Segment two = new Segment(1, 10, 10, 10);
+        //vertical line down the middle of them
+        Segment three = new Segment(5, 2, 5, 15);
+
+        insertTree.insert(one);
+        insertTree.insert(two);
+
+        assertNotEquals(insertTree.collision(two), one);
+        assertNotEquals(insertTree.collision(one), two);
+
+        insertTree.insert(three);
+
+        //assert that there is a collision
+        assertEquals(insertTree.collision(three), one);
+
 
     }
 
