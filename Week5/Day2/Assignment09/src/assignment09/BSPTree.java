@@ -31,9 +31,6 @@ public class BSPTree{
     public BSPTree(ArrayList<Segment> segments){
         if(segments != null && !segments.isEmpty()){
             root_ = buildBSPTree(segments);
-//            for(Segment segment : segments){
-//                insert(segment);
-//            }
         }
     }
 
